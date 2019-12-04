@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 4px;
+    margin: 0 20px;
 
     .logo {
       display: flex;
