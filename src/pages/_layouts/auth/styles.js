@@ -70,6 +70,18 @@ export const Wrapper = styled.div`
             color: ${colors.grayLight};
           }
         }
+
+        span {
+          background-color: ${colors.warning};
+          color: ${colors.blackLight};
+          padding: 4px 10px;
+          border-radius: 4px;
+          margin-top: 4px;
+          font-size: 12px;
+          text-transform: none;
+          display: block;
+          text-align: center;
+        }
       }
 
       button {

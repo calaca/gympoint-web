@@ -11,4 +11,8 @@ export default {
   buttonPrimary: '#EE4D64',
   buttonSecondary: '#CCCCCC',
   shadow: 'rgba(0, 0, 0, 0.2)',
+  blackLight: 'rgba(0, 0, 0, 0.7)',
+  danger: '#f14668',
+  success: '#48c774',
+  warning: '#ffdd57',
 };
