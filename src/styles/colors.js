@@ -10,4 +10,5 @@ export default {
   notloggedBg: '#EE4D64',
   buttonPrimary: '#EE4D64',
   buttonSecondary: '#CCCCCC',
+  shadow: 'rgba(0, 0, 0, 0.2)',
 };
