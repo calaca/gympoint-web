@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import colors from '../../../styles/colors';
 
 export const Wrapper = styled.div`
-  height: 100px;
+  min-height: 100%;
   background: ${colors.loggedBg};
   color: ${colors.grayDark};
 `;
