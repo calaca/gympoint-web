@@ -100,7 +100,17 @@ export const Wrapper = styled.div`
         &:hover {
           background-color: ${darken(0.04, colors.primary)};
         }
+
+        svg {
+          animation: rotate 2s linear infinite;
+        }
       }
+    }
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
     }
   }
 `;

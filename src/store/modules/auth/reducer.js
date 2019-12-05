@@ -9,14 +9,24 @@ const INITIAL_STATE = {
 };
 
 export default function auth(state = INITIAL_STATE, action) {
-  switch (action.type) {
-    case constants.authSignInSuccess:
-      return produce(state, draft => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case constants.authSignInRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.authSignInSuccess: {
         draft.token = action.payload.token;
         draft.signed = true;
         draft.user = action.payload.user;
-      });
-    default:
-      return state;
-  }
+        draft.loading = false;
+        break;
+      }
+      case constants.authSignFailure: {
+        draft.loading = false;
+        break;
+      }
+      default:
+    }
+  });
 }
