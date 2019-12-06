@@ -1,72 +1,28 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdAdd } from 'react-icons/md';
-import Table from '~/components/Table';
 import Search from '~/components/Search';
+import api from '~/services/api';
 
 export default function StudentList() {
-  function handleEdit() {}
+  const [students, setStudents] = useState([]);
 
-  function handleRemove() {}
+  useEffect(() => {
+    async function loadStudents() {
+      const response = await api.get('students');
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Nome',
-        accessor: 'name',
-      },
-      {
-        Header: 'Email',
-        accessor: 'email',
-      },
-      {
-        Header: 'Idade',
-        accessor: 'age',
-      },
-      {
-        Header: () => null,
-        id: 'actions',
-        // eslint-disable-next-line react/prop-types
-        Cell: ({ row }) => (
-          <div className="actions">
-            <button
-              className="edit"
-              type="button"
-              onClick={e => handleEdit(e, row)}
-            >
-              Editar
-            </button>
-            <button
-              className="remove"
-              type="button"
-              onClick={e => handleRemove(e, row)}
-            >
-              Apagar
-            </button>
-          </div>
-        ),
-      },
-    ],
-    []
-  );
+      setStudents(response.data);
+    }
 
-  const data = [
-    {
-      id: 1,
-      name: 'Lorena C. F.',
-      email: 'lorena.calaca.od@gmail.com',
-      age: 26,
-      weight: 4430,
-      height: 166,
-    },
-    {
-      id: 2,
-      name: 'Lorena Calaça',
-      email: 'lorena_calaca@hotmail.com',
-      age: 26,
-      weight: 4470,
-      height: 166,
-    },
-  ];
+    loadStudents();
+  }, []);
+
+  function handleEdit(id) {
+    console.tron.log(id);
+  }
+
+  function handleRemove(id) {
+    console.tron.log(id);
+  }
 
   return (
     <>
@@ -81,7 +37,43 @@ export default function StudentList() {
         </div>
       </div>
       <div className="table-wrapper">
-        <Table columns={columns} data={data} />
+        <table>
+          <thead>
+            <tr>
+              <th colSpan="1">Nome</th>
+              <th colSpan="1">Email</th>
+              <th colSpan="1">Idade</th>
+              <th colSpan="1" aria-label="Ações" />
+            </tr>
+          </thead>
+          <tbody>
+            {students.map(student => (
+              <tr key={student.id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+                <td>
+                  <div className="actions">
+                    <button
+                      className="edit"
+                      type="button"
+                      onClick={() => handleEdit(student.id)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="remove"
+                      type="button"
+                      onClick={() => handleRemove(student.id)}
+                    >
+                      Apagar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
