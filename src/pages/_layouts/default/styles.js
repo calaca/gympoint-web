@@ -18,13 +18,17 @@ export const Container = styled.main`
     overflow-x: auto;
   }
 
+  .box,
   table {
     background-color: ${colors.white};
     padding: 30px;
     border-radius: 4px;
     width: 100%;
-    min-width: 700px;
+  }
+
+  table {
     border-spacing: 0px;
+    min-width: 700px;
 
     thead {
       text-align: left;
@@ -57,6 +61,12 @@ export const Container = styled.main`
 
           &:nth-child(3) {
             text-align: center;
+          }
+        }
+
+        &:last-child {
+          td {
+            border-bottom: 0;
           }
         }
 
@@ -99,6 +109,52 @@ export const Container = styled.main`
     }
   }
 
+  .box {
+    max-width: 100%;
+
+    form {
+      width: 100%;
+
+      label {
+        display: block;
+        width: 100%;
+        color: ${colors.grayDark};
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        line-height: 24px;
+        text-transform: uppercase;
+
+        input {
+          display: block;
+          width: 100%;
+          border-radius: 4px;
+          border: 1px solid ${colors.lines};
+          padding: 10px 14px;
+          font-size: 16px;
+          font-weight: normal;
+          color: ${colors.gray};
+
+          &::placeholder {
+            color: ${colors.grayLight};
+          }
+        }
+
+        span {
+          background-color: ${colors.warning};
+          color: ${colors.blackLight};
+          padding: 4px 10px;
+          border-radius: 4px;
+          margin-top: 4px;
+          font-size: 12px;
+          text-transform: none;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+  }
+
   .actions {
     margin-bottom: 24px;
     display: flex;
@@ -124,6 +180,7 @@ export const Container = styled.main`
       }
 
       button,
+      a,
       .search {
         margin-left: 16px;
         border-radius: 4px;

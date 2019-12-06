@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 import Search from '~/components/Search';
 import api from '~/services/api';
@@ -30,9 +31,9 @@ export default function StudentList() {
         <h1 className="section-title">Gerenciando alunos</h1>
 
         <div className="cta">
-          <button type="button" className="btn btn-primary" onClick={() => {}}>
+          <Link to="/student-add" className="btn btn-primary">
             <MdAdd size={20} /> <span>Cadastrar</span>
-          </button>
+          </Link>
           <Search />
         </div>
       </div>
