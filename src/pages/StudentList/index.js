@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+import { Debounce } from 'react-throttle';
 import Search from '~/components/Search';
 import api from '~/services/api';
 
 export default function StudentList() {
   const [students, setStudents] = useState([]);
+  const [studentsToShow, setStudentsToShow] = useState([]);
 
   useEffect(() => {
     async function loadStudents() {
       const response = await api.get('students');
 
       setStudents(response.data);
+      setStudentsToShow(response.data);
     }
 
     loadStudents();
@@ -25,6 +28,11 @@ export default function StudentList() {
     console.tron.log(id);
   }
 
+  function handleSearch(query) {
+    console.tron.log(query);
+    console.tron.log(students);
+  }
+
   return (
     <>
       <div className="actions">
@@ -34,7 +42,9 @@ export default function StudentList() {
           <Link to="/student-add" className="btn btn-primary">
             <MdAdd size={20} /> <span>Cadastrar</span>
           </Link>
-          <Search />
+          <Debounce time="400" handler="onChange">
+            <Search onChange={e => handleSearch(e.target.value)} />
+          </Debounce>
         </div>
       </div>
       <div className="table-wrapper">
@@ -48,7 +58,7 @@ export default function StudentList() {
             </tr>
           </thead>
           <tbody>
-            {students.map(student => (
+            {studentsToShow.map(student => (
               <tr key={student.id}>
                 <td>{student.name}</td>
                 <td>{student.email}</td>

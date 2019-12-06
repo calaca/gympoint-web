@@ -107,10 +107,4 @@ export const Wrapper = styled.div`
       }
     }
   }
-
-  @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 `;

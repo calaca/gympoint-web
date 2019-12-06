@@ -252,4 +252,10 @@ export const Container = styled.main`
       }
     }
   }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
