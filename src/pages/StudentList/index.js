@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdAdd } from 'react-icons/md';
-import { Debounce } from 'react-throttle';
-import Search from '~/components/Search';
+import { MdAdd, MdSearch } from 'react-icons/md';
+import escapeRegExp from 'escape-string-regexp';
 import api from '~/services/api';
 
 export default function StudentList() {
   const [students, setStudents] = useState([]);
+  const [query, setQuery] = useState('');
   const [studentsToShow, setStudentsToShow] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,26 @@ export default function StudentList() {
     }
 
     loadStudents();
-  }, []);
+
+    function filterResults() {
+      if (query) {
+        const match = new RegExp(escapeRegExp(query.trim().toLowerCase()), 'i');
+
+        const results = students.filter(student => {
+          const name = match.test(student.name);
+          const email = match.test(student.email);
+
+          return name + email;
+        });
+
+        setStudentsToShow(results);
+      } else {
+        setStudentsToShow(students);
+      }
+    }
+
+    filterResults();
+  }, [query, students]);
 
   function handleEdit(id) {
     console.tron.log(id);
@@ -28,9 +47,9 @@ export default function StudentList() {
     console.tron.log(id);
   }
 
-  function handleSearch(query) {
+  function handleSearch(e) {
+    setQuery(e.target.value);
     console.tron.log(query);
-    console.tron.log(students);
   }
 
   return (
@@ -42,9 +61,16 @@ export default function StudentList() {
           <Link to="/student-add" className="btn btn-primary">
             <MdAdd size={20} /> <span>Cadastrar</span>
           </Link>
-          <Debounce time="400" handler="onChange">
-            <Search onChange={e => handleSearch(e.target.value)} />
-          </Debounce>
+          <div className="search-wrapper">
+            <MdSearch size={16} />
+            <input
+              className="search"
+              type="text"
+              placeholder="Buscar aluno"
+              value={query}
+              onChange={handleSearch}
+            />
+          </div>
         </div>
       </div>
       <div className="table-wrapper">
