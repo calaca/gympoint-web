@@ -8693,6 +8693,11 @@ react-scripts@3.2.0:
   optionalDependencies:
     fsevents "2.0.7"
 
+react-table@^7.0.0-beta.28:
+  version "7.0.0-beta.28"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.0-beta.28.tgz#f5cd37b09fdbc7f22f472d021c56637d9fae097c"
+  integrity sha512-Ym05FAFNPGU6cid3Uw2W2+tn3mfGqKkLs51dw5FAJyz3fFNV0/i/CrTzHXZbVDA/KO2KNFYUjKGQJxIiDbXb4w==
+
 react-toastify@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-5.4.1.tgz#27533ca33753631016c44122934c7b6548352fcb"
