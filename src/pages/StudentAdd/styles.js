@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const Label = styled.label``;
+export const Label = styled.label`
+  em {
+    text-transform: none;
+    font-style: normal;
+  }
+`;
 
 export const Grid = styled.div`
   display: grid;

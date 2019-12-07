@@ -5,7 +5,8 @@ import { Form, Input } from '@rocketseat/unform';
 import * as yup from 'yup';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { registerRequest } from '~/store/modules/student/actions';
-
+import Mask from '~/components/Mask';
+import formatMetricToNumber from '~/utils/formatMetricToInteger';
 import { Label, Grid } from './styles';
 
 const schema = yup.object().shape({
@@ -15,10 +16,8 @@ const schema = yup.object().shape({
     .email('Email inválido')
     .required('Email é obrigatório'),
   age: yup.number('Idade deve ser um número').required('Idade é obrigatória'),
-  weight: yup.number('Peso deve ser um número').required('Peso é obrigatório'),
-  height: yup
-    .number('Altura deve ser um número')
-    .required('Altura é obrigatório'),
+  weight: yup.string().required('Peso é obrigatório'),
+  height: yup.string().required('Altura é obrigatório'),
 });
 
 export default function StudentAdd() {
@@ -27,7 +26,15 @@ export default function StudentAdd() {
   const loading = useSelector(state => state.student.loading);
 
   function handleSubmit({ name, email, age, weight, height }) {
-    dispatch(registerRequest(name, email, age, weight, height));
+    dispatch(
+      registerRequest(
+        name,
+        email,
+        age,
+        formatMetricToNumber(weight),
+        formatMetricToNumber(height)
+      )
+    );
   }
 
   return (
@@ -82,13 +89,13 @@ export default function StudentAdd() {
             </Label>
 
             <Label htmlFor="weight">
-              Peso
-              <Input type="number" name="weight" id="weight" />
+              Peso <em>(em kg)</em>
+              <Mask name="weight" inputMask="99,99kg" />
             </Label>
 
             <Label htmlFor="height">
               Altura
-              <Input type="number" name="height" id="height" />
+              <Mask name="height" inputMask="9,99m" />
             </Label>
           </Grid>
         </Form>
