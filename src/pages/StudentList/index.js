@@ -125,7 +125,11 @@ export default function StudentList() {
   );
 }
 
+StudentList.defaultProps = {
+  row: null,
+};
+
 StudentList.propTypes = {
   // eslint-disable-next-line react/no-unused-prop-types
-  row: PropTypes.objectOf(PropTypes.object).isRequired,
+  row: PropTypes.objectOf(PropTypes.object),
 };
