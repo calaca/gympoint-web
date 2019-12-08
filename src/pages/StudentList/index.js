@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import escapeRegExp from 'escape-string-regexp';
 import { removeRequest, loadRequest } from '~/store/modules/students/actions';
 import history from '~/services/history';
+import Table from '~/components/Table';
 
 export default function StudentList() {
   const dispatch = useDispatch();
@@ -37,20 +39,55 @@ export default function StudentList() {
     filterResults();
   }, [query, students]);
 
-  function handleEdit(id) {
-    const student = students.find(s => s.id === id);
-    history.push(`/students/edit/${id}`, {
-      student,
-    });
-  }
-
-  function handleRemove(id) {
-    dispatch(removeRequest(id));
-  }
-
   function handleSearch(e) {
     setQuery(e.target.value);
   }
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Nome',
+        accessor: 'name',
+      },
+      {
+        Header: 'E-mail',
+        accessor: 'email',
+      },
+      {
+        Header: 'Idade',
+        accessor: 'age',
+      },
+      {
+        id: 'actions',
+        Header: () => null,
+        Cell: ({ row }) => (
+          <div className="actions">
+            <button
+              className="edit"
+              type="button"
+              onClick={() => {
+                const { id } = row.original;
+                const student = students.find(s => s.id === id);
+                history.push(`/students/edit/${id}`, {
+                  student,
+                });
+              }}
+            >
+              Editar
+            </button>
+            <button
+              className="remove"
+              type="button"
+              onClick={() => dispatch(removeRequest(row.original.id))}
+            >
+              Apagar
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [dispatch, students]
+  );
 
   return (
     <>
@@ -75,43 +112,7 @@ export default function StudentList() {
       </div>
       <div className="table-wrapper">
         {studentsToShow.length !== 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th colSpan="1">Nome</th>
-                <th colSpan="1">Email</th>
-                <th colSpan="1">Idade</th>
-                <th colSpan="1" aria-label="Ações" />
-              </tr>
-            </thead>
-            <tbody>
-              {studentsToShow.map(student => (
-                <tr key={student.id}>
-                  <td>{student.name}</td>
-                  <td>{student.email}</td>
-                  <td>{student.age}</td>
-                  <td>
-                    <div className="actions">
-                      <button
-                        className="edit"
-                        type="button"
-                        onClick={() => handleEdit(student.id)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="remove"
-                        type="button"
-                        onClick={() => handleRemove(student.id)}
-                      >
-                        Apagar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table columns={columns} data={studentsToShow} />
         ) : (
           <div className="box">
             <p>
@@ -123,3 +124,8 @@ export default function StudentList() {
     </>
   );
 }
+
+StudentList.propTypes = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  row: PropTypes.objectOf(PropTypes.object).isRequired,
+};

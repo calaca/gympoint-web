@@ -13,6 +13,7 @@ export const Container = styled.div`
   top: 0;
   right: 0;
   text-align: left;
+  z-index: 1;
 
   .mobile-links {
     margin-top: 30px;

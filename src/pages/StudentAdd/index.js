@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 export default function StudentAdd() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.student.loading);
+  const loading = useSelector(state => state.students.loading);
 
   function handleSubmit({ name, email, age, weight, height }) {
     dispatch(

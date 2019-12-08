@@ -253,6 +253,43 @@ export const Container = styled.main`
     }
   }
 
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+
+    button {
+      border: 0;
+      transition: all 0.4s ease-in-out;
+      padding: 10px 16px;
+      background-color: ${colors.white};
+      border-radius: 4px;
+      margin: 0 5px;
+      display: inline-block;
+
+      svg {
+        color: ${colors.primary};
+      }
+
+      &:hover {
+        background-color: ${darken(0.06, colors.white)};
+      }
+
+      &:disabled {
+        pointer-events: none;
+        opacity: 0.6;
+      }
+    }
+
+    span {
+      font-size: 14px;
+      color: ${colors.gray};
+      display: inline-block;
+      padding: 0 5px;
+    }
+  }
+
   @keyframes rotate {
     100% {
       transform: rotate(360deg);
