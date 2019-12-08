@@ -18,6 +18,15 @@ export default function student(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case constants.studentEditRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.studentEditSuccess: {
+        draft.student = action.payload.student;
+        draft.loading = false;
+        break;
+      }
       case constants.studentFailure: {
         draft.loading = false;
         break;

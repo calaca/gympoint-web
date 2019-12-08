@@ -14,6 +14,20 @@ export function registerSucces(student) {
   };
 }
 
+export function editRequest(student, id) {
+  return {
+    type: constants.studentEditRequest,
+    payload: { student, id },
+  };
+}
+
+export function editSuccess(student) {
+  return {
+    type: constants.studentEditSuccess,
+    payload: { student },
+  };
+}
+
 export function studentFalure() {
   return {
     type: constants.studentFailure,

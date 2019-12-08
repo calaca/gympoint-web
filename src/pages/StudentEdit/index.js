@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import Mask from '~/components/Mask';
+import { editRequest } from '~/store/modules/student/actions';
+import formatMetricToNumber from '~/utils/formatMetricToInteger';
 import { Label, Grid } from './styles';
 
 export default function StudentEdit() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const loading = useSelector(state => state.student.loading);
   const [nameValue, setNameValue] = useState(
     history.location.state.student.name
@@ -17,8 +20,24 @@ export default function StudentEdit() {
   );
   const [ageValue, setAgeValue] = useState(history.location.state.student.age);
 
-  function handleSubmit(data) {
-    console.tron.log(data);
+  function handleSubmit(student) {
+    console.tron.log();
+
+    const formattedStudent = {
+      ...student,
+      weight:
+        typeof student.weight !== 'number'
+          ? formatMetricToNumber(student.weight)
+          : student.weight,
+      height:
+        typeof student.height !== 'number'
+          ? formatMetricToNumber(student.height)
+          : student.height,
+    };
+
+    console.tron.log(formattedStudent);
+
+    dispatch(editRequest(formattedStudent, history.location.state.student.id));
   }
   return (
     <>

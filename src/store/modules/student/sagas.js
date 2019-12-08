@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import constants from './constants';
-import { registerSucces, studentFalure } from './actions';
+import { registerSucces, studentFalure, editSuccess } from './actions';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -27,6 +27,22 @@ export function* registerStudent({ payload }) {
   }
 }
 
+export function* editStudent({ payload }) {
+  try {
+    const { student, id } = payload;
+
+    const response = yield call(api.put, `students/${id}`, student);
+
+    yield put(editSuccess(response.data));
+
+    history.push('/students');
+  } catch (err) {
+    toast.error('Falha na edição. Por favor, verifique seus dados.');
+    yield put(studentFalure());
+  }
+}
+
 export default all([
   takeLatest(constants.studentRegisterRequest, registerStudent),
+  takeLatest(constants.studentEditRequest, editStudent),
 ]);

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by';
 import api from '~/services/api';
 import history from '~/services/history';
 
@@ -19,7 +20,9 @@ export default function StudentList() {
     }
 
     loadStudents();
+  }, []);
 
+  useMemo(() => {
     function filterResults() {
       if (query) {
         const match = new RegExp(escapeRegExp(query.trim().toLowerCase()), 'i');
@@ -35,10 +38,12 @@ export default function StudentList() {
       } else {
         setStudentsToShow(students);
       }
+
+      students.sort(sortBy('name'));
     }
 
     filterResults();
-  }, [query, students]);
+  }, [students, query]);
 
   function handleEdit(id) {
     const student = students.find(s => s.id === id);
