@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as yup from 'yup';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
-import { registerRequest } from '~/store/modules/student/actions';
+import { registerRequest } from '~/store/modules/students/actions';
 import Mask from '~/components/Mask';
 import formatMetricToNumber from '~/utils/formatMetricToInteger';
 import { Label, Grid } from './styles';

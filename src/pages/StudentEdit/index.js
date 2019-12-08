@@ -4,14 +4,14 @@ import { Form, Input } from '@rocketseat/unform';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import Mask from '~/components/Mask';
-import { editRequest } from '~/store/modules/student/actions';
+import { editRequest } from '~/store/modules/students/actions';
 import formatMetricToNumber from '~/utils/formatMetricToInteger';
 import { Label, Grid } from './styles';
 
 export default function StudentEdit() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.student.loading);
+  const loading = useSelector(state => state.students.loading);
   const [nameValue, setNameValue] = useState(
     history.location.state.student.name
   );

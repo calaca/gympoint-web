@@ -1,26 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
-import api from '~/services/api';
+import { removeRequest, loadRequest } from '~/store/modules/students/actions';
 import history from '~/services/history';
 
 export default function StudentList() {
-  const [students, setStudents] = useState([]);
+  const dispatch = useDispatch();
+  const students = useSelector(state => state.students.students);
   const [query, setQuery] = useState('');
   const [studentsToShow, setStudentsToShow] = useState([]);
 
   useEffect(() => {
-    async function loadStudents() {
-      const response = await api.get('students');
-
-      setStudents(response.data);
-      setStudentsToShow(response.data);
-    }
-
-    loadStudents();
-  }, []);
+    dispatch(loadRequest());
+  }, [dispatch]);
 
   useMemo(() => {
     function filterResults() {
@@ -38,12 +32,10 @@ export default function StudentList() {
       } else {
         setStudentsToShow(students);
       }
-
-      students.sort(sortBy('name'));
     }
 
     filterResults();
-  }, [students, query]);
+  }, [query, students]);
 
   function handleEdit(id) {
     const student = students.find(s => s.id === id);
@@ -53,12 +45,11 @@ export default function StudentList() {
   }
 
   function handleRemove(id) {
-    console.tron.log(id);
+    dispatch(removeRequest(id));
   }
 
   function handleSearch(e) {
     setQuery(e.target.value);
-    console.tron.log(query);
   }
 
   return (
@@ -83,43 +74,51 @@ export default function StudentList() {
         </div>
       </div>
       <div className="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th colSpan="1">Nome</th>
-              <th colSpan="1">Email</th>
-              <th colSpan="1">Idade</th>
-              <th colSpan="1" aria-label="Ações" />
-            </tr>
-          </thead>
-          <tbody>
-            {studentsToShow.map(student => (
-              <tr key={student.id}>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.age}</td>
-                <td>
-                  <div className="actions">
-                    <button
-                      className="edit"
-                      type="button"
-                      onClick={() => handleEdit(student.id)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="remove"
-                      type="button"
-                      onClick={() => handleRemove(student.id)}
-                    >
-                      Apagar
-                    </button>
-                  </div>
-                </td>
+        {studentsToShow.length !== 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th colSpan="1">Nome</th>
+                <th colSpan="1">Email</th>
+                <th colSpan="1">Idade</th>
+                <th colSpan="1" aria-label="Ações" />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {studentsToShow.map(student => (
+                <tr key={student.id}>
+                  <td>{student.name}</td>
+                  <td>{student.email}</td>
+                  <td>{student.age}</td>
+                  <td>
+                    <div className="actions">
+                      <button
+                        className="edit"
+                        type="button"
+                        onClick={() => handleEdit(student.id)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="remove"
+                        type="button"
+                        onClick={() => handleRemove(student.id)}
+                      >
+                        Apagar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="box">
+            <p>
+              Não existem resultados para <strong>{query}</strong>
+            </p>
+          </div>
+        )}
       </div>
     </>
   );
