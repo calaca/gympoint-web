@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
@@ -68,3 +69,12 @@ export default function PlanList() {
     </>
   );
 }
+
+PlanList.defaultProps = {
+  row: null,
+};
+
+PlanList.propTypes = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  row: PropTypes.objectOf(PropTypes.object),
+};
