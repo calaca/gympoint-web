@@ -14,8 +14,8 @@ export function registerSucces(student) {
   };
 }
 
-export function registerFailure() {
+export function studentFalure() {
   return {
-    type: constants.studentRegisterFailure,
+    type: constants.studentFailure,
   };
 }

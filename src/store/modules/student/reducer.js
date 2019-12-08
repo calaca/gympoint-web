@@ -18,7 +18,7 @@ export default function student(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
-      case constants.studentRegisterFailure: {
+      case constants.studentFailure: {
         draft.loading = false;
         break;
       }

@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import InputMask from 'react-input-mask';
 import { useField } from '@rocketseat/unform';
 
-export default function Mask({ name, inputMask }) {
+export default function Mask({ name, inputMask, valueDefault }) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
-  const [mask, setMask] = useState(defaultValue || '');
+  const [mask, setMask] = useState(
+    defaultValue || valueDefault ? valueDefault : ''
+  );
 
   useEffect(() => {
     if (ref.current) {
@@ -19,12 +21,13 @@ export default function Mask({ name, inputMask }) {
   }, [ref.current]); // eslint-disable-line
 
   function handleMask(e) {
-    setMask(e.target.value);
+    return setMask(e.target.value);
   }
 
   return (
     <>
       <InputMask
+        type="text"
         id={fieldName}
         name={fieldName}
         mask={inputMask}
@@ -37,7 +40,12 @@ export default function Mask({ name, inputMask }) {
   );
 }
 
+Mask.defaultProps = {
+  valueDefault: '',
+};
+
 Mask.propTypes = {
   name: PropTypes.string.isRequired,
   inputMask: PropTypes.string.isRequired,
+  valueDefault: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

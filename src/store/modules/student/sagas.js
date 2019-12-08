@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import constants from './constants';
-import { registerSucces, registerFailure } from './actions';
+import { registerSucces, studentFalure } from './actions';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -23,7 +23,7 @@ export function* registerStudent({ payload }) {
     history.push('/students');
   } catch (err) {
     toast.error('Falha no cadastro. Por favor, verifique seus dados.');
-    yield put(registerFailure());
+    yield put(studentFalure());
   }
 }
 

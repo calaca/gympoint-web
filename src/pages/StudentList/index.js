@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import escapeRegExp from 'escape-string-regexp';
 import api from '~/services/api';
+import history from '~/services/history';
 
 export default function StudentList() {
   const [students, setStudents] = useState([]);
@@ -40,7 +41,10 @@ export default function StudentList() {
   }, [query, students]);
 
   function handleEdit(id) {
-    console.tron.log(id);
+    const student = students.find(s => s.id === id);
+    history.push(`/students/edit/${id}`, {
+      student,
+    });
   }
 
   function handleRemove(id) {
@@ -58,7 +62,7 @@ export default function StudentList() {
         <h1 className="section-title">Gerenciando alunos</h1>
 
         <div className="cta">
-          <Link to="/student-add" className="btn btn-primary">
+          <Link to="/students/add" className="btn btn-primary">
             <MdAdd size={20} /> <span>Cadastrar</span>
           </Link>
           <div className="search-wrapper">

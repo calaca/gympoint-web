@@ -19,16 +19,21 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
 
-      <Route path="/enrollments" component={EnrollmentList} isPrivate />
-      <Route path="/enrollments-add" component={EnrollmentAdd} isPrivate />
-      <Route path="/enrollments-edit" component={EnrollmentEdit} isPrivate />
-      <Route path="/help-orders" component={HelpOrderList} isPrivate />
-      <Route path="/plans" component={PlanList} isPrivate />
-      <Route path="/plans-add" component={PlanAdd} isPrivate />
-      <Route path="/plans-edit" component={PlanEdit} isPrivate />
-      <Route path="/students" component={StudentList} isPrivate />
-      <Route path="/student-add" component={StudentAdd} isPrivate />
-      <Route path="/student-edit" component={StudentEdit} isPrivate />
+      <Route path="/enrollments" exact component={EnrollmentList} isPrivate />
+      <Route path="/enrollments/add" component={EnrollmentAdd} isPrivate />
+      <Route path="/enrollments/edit" component={EnrollmentEdit} isPrivate />
+      <Route path="/help-orders" exact component={HelpOrderList} isPrivate />
+      <Route path="/plans" exact component={PlanList} isPrivate />
+      <Route path="/plans/add" component={PlanAdd} isPrivate />
+      <Route path="/plans/edit" component={PlanEdit} isPrivate />
+      <Route path="/students" exact component={StudentList} isPrivate />
+      <Route path="/students/add" exact component={StudentAdd} isPrivate />
+      <Route
+        path="/students/edit/:studentId"
+        exact
+        component={StudentEdit}
+        isPrivate
+      />
     </Switch>
   );
 }

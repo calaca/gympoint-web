@@ -90,7 +90,7 @@ export default function StudentAdd() {
 
             <Label htmlFor="weight">
               Peso <em>(em kg)</em>
-              <Mask name="weight" inputMask="99,99kg" />
+              <Mask name="weight" inputMask="99,9kg" />
             </Label>
 
             <Label htmlFor="height">
