@@ -53,8 +53,9 @@ export const Content = styled.div`
       }
     }
 
-    small {
-      cursor: pointer;
+    button {
+      background-color: transparent;
+      border: 0;
       font-size: 14px;
       font-weight: normal;
       color: ${colors.primary};

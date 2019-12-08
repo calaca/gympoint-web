@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdMenu, MdClose } from 'react-icons/md';
 
 import { Container, Content, NavLinkStyled, MenuLink } from './styles';
 
+import { signOut } from '~/store/modules/auth/actions';
 import MenuMobile from '~/components/MenuMobile';
 import logo from '~/assets/logo_horizontal.svg';
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
   const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
 
   function handleMenuMobile() {
     setMenu(!menu);
+  }
+
+  function handleSignOut() {
+    dispatch(signOut());
   }
 
   return (
@@ -33,7 +39,9 @@ export default function Header() {
         </nav>
         <aside>
           <strong>{user.name}</strong>
-          <small>Sair do sistema</small>
+          <button type="button" onClick={handleSignOut}>
+            Sair do sistema
+          </button>
           <MenuLink
             type="button"
             className="menu-link"

@@ -22,6 +22,12 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case constants.authSignOut: {
+        draft.token = null;
+        draft.signed = false;
+        draft.user = {};
+        break;
+      }
       case constants.authSignFailure: {
         draft.loading = false;
         break;
