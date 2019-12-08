@@ -1,7 +1,70 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { MdAdd } from 'react-icons/md';
+import Table from '~/components/Table';
+import { loadRequest } from '~/store/modules/plans/actions';
+import currencyFormatter from '~/utils/currencyFormatter';
 
-// import { Container } from './styles';
+import { TableWrapper } from './styles';
 
 export default function PlanList() {
-  return <div>PlanList</div>;
+  const dispatch = useDispatch();
+  const plans = useSelector(state => state.plans.plans);
+
+  useEffect(() => {
+    dispatch(loadRequest());
+  }, [dispatch]);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Título',
+        accessor: 'title',
+      },
+      {
+        Header: 'Duração (mês)',
+        accessor: 'duration',
+      },
+      {
+        Header: 'Valor (mês)',
+        accessor: 'price',
+        Cell: ({ row }) => (
+          <span>R$ {currencyFormatter(row.values.price)}</span>
+        ),
+      },
+      {
+        id: 'actions',
+        Header: () => null,
+        Cell: ({ row }) => (
+          <div className="actions">
+            <button className="edit" type="button" onClick={() => {}}>
+              Editar
+            </button>
+            <button className="remove" type="button" onClick={() => {}}>
+              Apagar
+            </button>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
+
+  return (
+    <>
+      <div className="actions">
+        <h1 className="section-title">Gerenciando planos</h1>
+
+        <div className="cta">
+          <Link to="/plans/add" className="btn btn-primary">
+            <MdAdd size={20} /> <span>Cadastrar</span>
+          </Link>
+        </div>
+      </div>
+      <TableWrapper>
+        <Table columns={columns} data={plans} />
+      </TableWrapper>
+    </>
+  );
 }
