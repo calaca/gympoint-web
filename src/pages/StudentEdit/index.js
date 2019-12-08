@@ -3,10 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
+import * as yup from 'yup';
 import Mask from '~/components/Mask';
 import { editRequest } from '~/store/modules/students/actions';
 import formatMetricToNumber from '~/utils/formatMetricToInteger';
 import { Label, Grid } from './styles';
+
+const schema = yup.object().shape({
+  name: yup.string('Nome deve ser do tipo texto'),
+  email: yup.string().email('Email inválido'),
+  age: yup.number('Idade deve ser um número'),
+  weight: yup.string('Peso deve ser do tipo texto'),
+  height: yup.string('Altura deve ser do tipo texto'),
+});
 
 export default function StudentEdit() {
   const history = useHistory();
@@ -64,7 +73,7 @@ export default function StudentEdit() {
         </div>
       </div>
       <div className="box">
-        <Form id="update-student-form" onSubmit={handleSubmit}>
+        <Form id="update-student-form" onSubmit={handleSubmit} schema={schema}>
           <Label htmlFor="name">
             Nome completo
             <Input
