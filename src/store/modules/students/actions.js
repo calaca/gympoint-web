@@ -1,8 +1,9 @@
 import constants from './constants';
 
-export function loadRequest() {
+export function loadRequest(query) {
   return {
     type: constants.studentsLoadRequest,
+    payload: { query },
   };
 }
 

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import { MdAdd, MdSearch } from 'react-icons/md';
-import escapeRegExp from 'escape-string-regexp';
 import { removeRequest, loadRequest } from '~/store/modules/students/actions';
 import history from '~/services/history';
 import Table from '~/components/Table';
@@ -13,32 +12,22 @@ export default function StudentList() {
   const dispatch = useDispatch();
   const students = useSelector(state => state.students.students);
   const [query, setQuery] = useState('');
-  const [studentsToShow, setStudentsToShow] = useState([]);
 
   useEffect(() => {
-    dispatch(loadRequest());
+    dispatch(loadRequest(''));
   }, [dispatch]);
 
   useMemo(() => {
     function filterResults() {
       if (query) {
-        const match = new RegExp(escapeRegExp(query.trim().toLowerCase()), 'i');
-
-        const results = students.filter(student => {
-          const name = match.test(student.name);
-          const email = match.test(student.email);
-
-          return name + email;
-        });
-
-        setStudentsToShow(results);
+        dispatch(loadRequest(query));
       } else {
-        setStudentsToShow(students);
+        dispatch(loadRequest(''));
       }
     }
 
     filterResults();
-  }, [query, students]);
+  }, [dispatch, query]);
 
   function handleSearch(e) {
     setQuery(e.target.value);
@@ -127,8 +116,8 @@ export default function StudentList() {
         </div>
       </div>
       <div className="table-wrapper">
-        {studentsToShow.length !== 0 ? (
-          <Table columns={columns} data={studentsToShow} />
+        {students.length !== 0 ? (
+          <Table columns={columns} data={students} />
         ) : (
           <div className="box">
             <p>

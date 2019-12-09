@@ -12,9 +12,11 @@ import {
 import api from '~/services/api';
 import history from '~/services/history';
 
-export function* loadStudents() {
+export function* loadStudents({ payload }) {
   try {
-    const response = yield call(api.get, 'students');
+    const { query } = payload;
+
+    const response = yield call(api.get, `students?q=${query}`);
 
     yield put(loadSuccess(response.data));
   } catch (err) {
