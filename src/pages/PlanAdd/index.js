@@ -18,7 +18,13 @@ export default function PlanAdd() {
   const [total, setTotal] = useState(0);
 
   function handleSubmit({ title, duration }) {
-    dispatch(registerRequest(title, duration, formatMetricToInteger(price)));
+    dispatch(
+      registerRequest(
+        title,
+        duration,
+        typeof price !== 'number' ? formatMetricToInteger(price) : price
+      )
+    );
   }
 
   useMemo(() => {

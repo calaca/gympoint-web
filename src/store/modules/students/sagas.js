@@ -45,7 +45,7 @@ export function* registerStudent({ payload }) {
 
     history.push('/students');
   } catch (err) {
-    toast.error('Falha no cadastro de aluno. Por favor, verifique seus dados.');
+    err.response.data.errors.map(error => toast.error(error.msg));
     yield put(studentFalure());
   }
 }
@@ -62,7 +62,7 @@ export function* editStudent({ payload }) {
 
     history.push('/students');
   } catch (err) {
-    toast.error('Falha na edição de aluno. Por favor, verifique seus dados.');
+    err.response.data.errors.map(error => toast.error(error.msg));
     yield put(studentFalure());
   }
 }

@@ -41,7 +41,7 @@ export function* registerPlan({ payload }) {
 
     history.push('/plans');
   } catch (err) {
-    toast.error('Falha no cadastro de plano. Por favor, verifique seus dados.');
+    err.response.data.errors.map(error => toast.error(error.msg));
     yield put(planFailure());
   }
 }
@@ -58,7 +58,7 @@ export function* editPlan({ payload }) {
 
     history.push('/plans');
   } catch (err) {
-    toast.error('Falha na edição de plano. Por favor, verifique seus dados.');
+    err.response.data.errors.map(error => toast.error(error.msg));
     yield put(planFailure());
   }
 }
