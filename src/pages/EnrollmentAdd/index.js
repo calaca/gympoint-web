@@ -1,13 +1,23 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
-import { Label } from './styles';
+import CurrencyFormat from 'react-currency-format';
+import ReactSelect from '~/components/ReactSelect';
+import { loadRequest } from '~/store/modules/students/actions';
+import { Label, Grid } from './styles';
 
 export default function EnrollmentAdd() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const loading = useSelector(state => state.enrollments.loading);
+  const students = useSelector(state => state.students.students);
+  const plans = useSelector(state => state.plans.plans);
+
+  useEffect(() => {
+    dispatch(loadRequest(''));
+  }, [dispatch]);
 
   function handleSubmit(data) {
     console.tron.log(data);
@@ -41,13 +51,54 @@ export default function EnrollmentAdd() {
         <Form id="register-plan-form" onSubmit={handleSubmit}>
           <Label htmlFor="student">
             Aluno
-            <Input
-              type="text"
-              name="student"
+            <ReactSelect
+              className="select"
               id="student"
-              placeholder="Buscar aluno"
+              name="student"
+              options={students}
             />
           </Label>
+
+          <Grid>
+            <Label htmlFor="plan">
+              Plano
+              <ReactSelect
+                className="select"
+                id="plan"
+                name="plan"
+                options={plans}
+              />
+            </Label>
+
+            <Label htmlFor="start_date">
+              Data de início
+              <Input placeholder="exemplo" name="start_date" id="start_date" />
+            </Label>
+
+            <Label htmlFor="end_date">
+              Data de término
+              <Input
+                placeholder="exemplo"
+                name="end_date"
+                id="end_date"
+                disabled
+              />
+            </Label>
+
+            <Label htmlFor="total">
+              Valor final
+              <CurrencyFormat
+                prefix="R$"
+                fixedDecimalScale
+                decimalSeparator=","
+                decimalScale={2}
+                thousandSeparator="."
+                name="total"
+                id="total"
+                disabled
+              />
+            </Label>
+          </Grid>
         </Form>
       </div>
     </>

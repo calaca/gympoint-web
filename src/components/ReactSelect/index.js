@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import Select from 'react-select';
-
 import { useField } from '@rocketseat/unform';
+import { lighten } from 'polished';
+import colors from '~/styles/colors';
 
 export default function ReactSelect({
   name,
@@ -56,7 +57,16 @@ export default function ReactSelect({
         defaultValue={getDefaultValue()}
         ref={ref}
         getOptionValue={option => option.id}
-        getOptionLabel={option => option.title}
+        getOptionLabel={option => option.title || option.name}
+        theme={theme => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary25: lighten(0.25, colors.primary),
+            primary50: lighten(0.2, colors.primary),
+            primary: colors.primary,
+          },
+        })}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
       />

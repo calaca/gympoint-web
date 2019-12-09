@@ -125,6 +125,11 @@ export const Container = styled.main`
         line-height: 24px;
         text-transform: uppercase;
 
+        div {
+          font-weight: normal;
+          text-transform: none;
+        }
+
         input {
           display: block;
           width: 100%;
