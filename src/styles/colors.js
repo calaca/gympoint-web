@@ -14,7 +14,7 @@ export default {
   shadow: 'rgba(0, 0, 0, 0.2)',
   blackLight: 'rgba(0, 0, 0, 0.7)',
   danger: '#DE3B3B',
-  success: '#48c774',
+  success: '#42CB59',
   warning: '#ffdd57',
   info: '#4D85EE',
 };
