@@ -39,6 +39,8 @@ export function* registerStudent({ payload }) {
 
     yield put(registerSucces(response.data));
 
+    toast.success('Aluno adicionado com sucesso!');
+
     history.push('/students');
   } catch (err) {
     toast.error('Falha no cadastro de aluno. Por favor, verifique seus dados.');
@@ -54,6 +56,8 @@ export function* editStudent({ payload }) {
 
     yield put(editSuccess(response.data));
 
+    toast.success('Aluno editado com sucesso!');
+
     history.push('/students');
   } catch (err) {
     toast.error('Falha na edição de aluno. Por favor, verifique seus dados.');
@@ -68,6 +72,8 @@ export function* removeStudent({ payload }) {
     const response = yield call(api.delete, `students/${id}`);
 
     yield put(removeSuccess(response.data));
+
+    toast.success('Aluno deletado com sucesso!');
   } catch (err) {
     toast.error('Falha ao apagar aluno. Por favor, verifique seus dados.');
     yield put(studentFalure());
