@@ -48,6 +48,20 @@ export function editSuccess(plan) {
   };
 }
 
+export function removeRequest(id) {
+  return {
+    type: constants.plansRemoveRequest,
+    payload: { id },
+  };
+}
+
+export function removeSuccess(plans) {
+  return {
+    type: constants.plansRemoveSuccess,
+    payload: { plans },
+  };
+}
+
 export function planFailure() {
   return {
     type: constants.plansFailure,

@@ -73,7 +73,7 @@ export function* removeStudent({ payload }) {
 
     yield put(removeSuccess(response.data));
 
-    toast.success('Aluno deletado com sucesso!');
+    toast.success('Aluno apagado com sucesso!');
   } catch (err) {
     toast.error('Falha ao apagar aluno. Por favor, verifique seus dados.');
     yield put(studentFalure());

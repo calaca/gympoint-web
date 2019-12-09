@@ -6,6 +6,7 @@ import {
   loadSuccess,
   registerSuccess,
   editSuccess,
+  removeSuccess,
 } from './actions';
 
 import api from '~/services/api';
@@ -62,8 +63,24 @@ export function* editPlan({ payload }) {
   }
 }
 
+export function* removePlan({ payload }) {
+  try {
+    const { id } = payload;
+
+    const response = yield call(api.delete, `plans/${id}`);
+
+    yield put(removeSuccess(response.data));
+
+    toast.success('Plano apagado com sucesso!');
+  } catch (err) {
+    toast.error('Falha ao apagar plano. Por favor, verifique seus dados.');
+    yield put(planFailure());
+  }
+}
+
 export default all([
   takeLatest(constants.plansLoadRequest, loadPlans),
   takeLatest(constants.plansRegisterRequest, registerPlan),
   takeLatest(constants.plansEditRequest, editPlan),
+  takeLatest(constants.plansRemoveRequest, removePlan),
 ]);

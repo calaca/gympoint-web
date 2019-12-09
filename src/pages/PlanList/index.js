@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 import Table from '~/components/Table';
-import { loadRequest } from '~/store/modules/plans/actions';
+import { loadRequest, removeRequest } from '~/store/modules/plans/actions';
 import currencyFormatter from '~/utils/currencyFormatter';
 
 import history from '~/services/history';
@@ -54,14 +54,18 @@ export default function PlanList() {
             >
               Editar
             </button>
-            <button className="remove" type="button" onClick={() => {}}>
+            <button
+              className="remove"
+              type="button"
+              onClick={() => dispatch(removeRequest(row.original.id))}
+            >
               Apagar
             </button>
           </div>
         ),
       },
     ],
-    [plans]
+    [dispatch, plans]
   );
 
   return (

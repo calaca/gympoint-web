@@ -37,6 +37,15 @@ export default function plans(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case constants.plansRemoveRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.plansRemoveSuccess: {
+        draft.plans = action.payload.plans;
+        draft.loading = false;
+        break;
+      }
       case constants.plansFailure: {
         draft.loading = false;
         break;
