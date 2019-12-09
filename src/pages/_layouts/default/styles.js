@@ -138,6 +138,10 @@ export const Container = styled.main`
           &::placeholder {
             color: ${colors.grayLight};
           }
+
+          &:disabled {
+            background-color: ${colors.loggedBg};
+          }
         }
 
         span {
