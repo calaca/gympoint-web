@@ -34,8 +34,9 @@ export const Container = styled.div`
       margin-bottom: 4px;
     }
 
-    small {
-      cursor: pointer;
+    button {
+      background-color: transparent;
+      border: 0;
       font-size: 14px;
       font-weight: normal;
       color: ${colors.primary};

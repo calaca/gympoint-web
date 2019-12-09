@@ -39,7 +39,7 @@ export default function Header() {
         </nav>
         <aside>
           <strong>{user.name}</strong>
-          <button type="button" onClick={handleSignOut}>
+          <button className="signout" type="button" onClick={handleSignOut}>
             Sair do sistema
           </button>
           <MenuLink

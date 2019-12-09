@@ -53,7 +53,7 @@ export const Content = styled.div`
       }
     }
 
-    button {
+    .signout {
       background-color: transparent;
       border: 0;
       font-size: 14px;
