@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { darken } from 'polished';
 import colors from './colors';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -51,5 +52,19 @@ export default createGlobalStyle`
     background: ${colors.buttonPrimary} !important;
     text-transform: uppercase;
     font-weight: bold;
+    transition: background 0.4s ease-in-out;
+
+    &:hover {
+      background: ${darken(0.04, colors.buttonPrimary)} !important;
+    }
+
+    &:last-child {
+      background: ${colors.loggedBg} !important;
+      color: ${colors.grayLight} !important;
+
+      &:hover {
+        background: ${darken(0.04, colors.loggedBg)} !important;
+      }
+    }
   }
 `;

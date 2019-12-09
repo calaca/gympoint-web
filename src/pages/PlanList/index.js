@@ -61,7 +61,7 @@ export default function PlanList() {
               onClick={() =>
                 confirmAlert({
                   title: 'Confirmação de remoção',
-                  message: 'Tem certeza que quer deletar este aluno?',
+                  message: 'Tem certeza que deseja apagar este plano?',
                   buttons: [
                     {
                       label: 'Sim',

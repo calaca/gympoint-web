@@ -71,7 +71,7 @@ export default function StudentList() {
               onClick={() =>
                 confirmAlert({
                   title: 'Confirmação de remoção',
-                  message: 'Tem certeza que quer deletar este aluno?',
+                  message: 'Tem certeza que deseja apagar este aluno?',
                   buttons: [
                     {
                       label: 'Sim',
