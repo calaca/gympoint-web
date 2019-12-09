@@ -1,7 +1,12 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import constants from './constants';
-import { planFailure, loadSuccess, registerSuccess } from './actions';
+import {
+  planFailure,
+  loadSuccess,
+  registerSuccess,
+  editSuccess,
+} from './actions';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -29,6 +34,8 @@ export function* registerPlan({ payload }) {
       price,
     });
 
+    toast.success('Plano adicionado com sucesso!');
+
     yield put(registerSuccess(response.data));
 
     history.push('/plans');
@@ -38,7 +45,25 @@ export function* registerPlan({ payload }) {
   }
 }
 
+export function* editPlan({ payload }) {
+  try {
+    const { plan, id } = payload;
+
+    const response = yield call(api.put, `plans/${id}`, plan);
+
+    yield put(editSuccess(response.data));
+
+    toast.success('Plano alterado com sucesso!');
+
+    history.push('/plans');
+  } catch (err) {
+    toast.error('Falha na edição de plano. Por favor, verifique seus dados.');
+    yield put(planFailure());
+  }
+}
+
 export default all([
   takeLatest(constants.plansLoadRequest, loadPlans),
   takeLatest(constants.plansRegisterRequest, registerPlan),
+  takeLatest(constants.plansEditRequest, editPlan),
 ]);

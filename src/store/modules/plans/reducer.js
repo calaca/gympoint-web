@@ -28,6 +28,15 @@ export default function plans(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case constants.plansEditRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.plansEditSuccess: {
+        draft.plan = action.payload.plan;
+        draft.loading = false;
+        break;
+      }
       case constants.plansFailure: {
         draft.loading = false;
         break;

@@ -31,6 +31,23 @@ export function registerSuccess(plan) {
   };
 }
 
+export function editRequest(plan, id) {
+  return {
+    type: constants.plansEditRequest,
+    payload: {
+      plan,
+      id,
+    },
+  };
+}
+
+export function editSuccess(plan) {
+  return {
+    type: constants.plansEditSuccess,
+    payload: { plan },
+  };
+}
+
 export function planFailure() {
   return {
     type: constants.plansFailure,

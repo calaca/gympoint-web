@@ -7,6 +7,8 @@ import Table from '~/components/Table';
 import { loadRequest } from '~/store/modules/plans/actions';
 import currencyFormatter from '~/utils/currencyFormatter';
 
+import history from '~/services/history';
+
 import { TableWrapper } from './styles';
 
 export default function PlanList() {
@@ -39,7 +41,17 @@ export default function PlanList() {
         Header: () => null,
         Cell: ({ row }) => (
           <div className="actions">
-            <button className="edit" type="button" onClick={() => {}}>
+            <button
+              className="edit"
+              type="button"
+              onClick={() => {
+                const { id } = row.original;
+                const plan = plans.find(p => p.id === id);
+                history.push(`/plans/edit/${id}`, {
+                  plan,
+                });
+              }}
+            >
               Editar
             </button>
             <button className="remove" type="button" onClick={() => {}}>
@@ -49,7 +61,7 @@ export default function PlanList() {
         ),
       },
     ],
-    []
+    [plans]
   );
 
   return (
