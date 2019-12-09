@@ -1,16 +1,36 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
-import Mask from '~/components/Mask';
+import CurrencyFormat from 'react-currency-format';
+import formatMetricToInteger from '~/utils/formatMetricToInteger';
+import currencyFormatter from '~/utils/currencyFormatter';
+import { registerRequest } from '~/store/modules/plans/actions';
 import { Label, Grid } from './styles';
 
 export default function PlanAdd() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const loading = useSelector(state => state.plans.loading);
+  const [durationVal, setDurationVal] = useState(1);
+  const [price, setPrice] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  function handleSubmit() {}
+  function handleSubmit({ title, duration }) {
+    dispatch(registerRequest(title, duration, formatMetricToInteger(price)));
+  }
+
+  useMemo(() => {
+    if (durationVal && price) {
+      setTotal(
+        currencyFormatter(
+          durationVal *
+            (typeof price !== 'number' ? formatMetricToInteger(price) : price)
+        )
+      );
+    }
+  }, [durationVal, price]);
 
   return (
     <>
@@ -51,17 +71,40 @@ export default function PlanAdd() {
                 name="duration"
                 id="duration"
                 placeholder="1"
+                value={durationVal}
+                onChange={e => setDurationVal(e.target.value)}
               />
             </Label>
 
             <Label htmlFor="price">
               Preço mensal
-              <Mask name="price" inputMask="R$999,99" />
+              <CurrencyFormat
+                prefix="R$"
+                fixedDecimalScale
+                decimalSeparator=","
+                decimalScale={2}
+                thousandSeparator="."
+                name="price"
+                id="price"
+                value={price}
+                onChange={e => setPrice(e.target.value)}
+              />
             </Label>
 
             <Label htmlFor="total">
               Preço total
-              <Mask name="total" inputMask="R$999,99" />
+              <CurrencyFormat
+                prefix="R$"
+                fixedDecimalScale
+                decimalSeparator=","
+                decimalScale={2}
+                thousandSeparator="."
+                name="total"
+                id="total"
+                value={total}
+                onChange={e => setTotal(e.target.value)}
+                disabled
+              />
             </Label>
           </Grid>
         </Form>

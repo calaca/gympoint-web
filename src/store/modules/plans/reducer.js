@@ -15,7 +15,16 @@ export default function plans(state = INITIAL_STATE, action) {
         break;
       }
       case constants.plansLoadSuccess: {
-        draft.plans = [...action.payload.plans];
+        draft.plans = action.payload.plans;
+        draft.loading = false;
+        break;
+      }
+      case constants.plansRegisterRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.plansRegisterSuccess: {
+        draft.plan = action.payload.plan;
         draft.loading = false;
         break;
       }

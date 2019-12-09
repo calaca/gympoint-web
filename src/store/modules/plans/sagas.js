@@ -1,9 +1,10 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import constants from './constants';
-import { planFailure, loadSuccess } from './actions';
+import { planFailure, loadSuccess, registerSuccess } from './actions';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 export function* loadPlans() {
   try {
@@ -18,4 +19,26 @@ export function* loadPlans() {
   }
 }
 
-export default all([takeLatest(constants.plansLoadRequest, loadPlans)]);
+export function* registerPlan({ payload }) {
+  try {
+    const { title, duration, price } = payload;
+
+    const response = yield call(api.post, 'plans', {
+      title,
+      duration,
+      price,
+    });
+
+    yield put(registerSuccess(response.data));
+
+    history.push('/plans');
+  } catch (err) {
+    toast.error('Falha no cadastro de plano. Por favor, verifique seus dados.');
+    yield put(planFailure());
+  }
+}
+
+export default all([
+  takeLatest(constants.plansLoadRequest, loadPlans),
+  takeLatest(constants.plansRegisterRequest, registerPlan),
+]);
