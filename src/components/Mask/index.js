@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import InputMask from 'react-input-mask';
 import { useField } from '@rocketseat/unform';
 
-export default function Mask({ name, inputMask, valueDefault, value }) {
+export default function Mask({ name, inputMask, valueDefault }) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
   const [mask, setMask] = useState(
@@ -31,7 +31,7 @@ export default function Mask({ name, inputMask, valueDefault, value }) {
         id={fieldName}
         name={fieldName}
         mask={inputMask}
-        value={value || mask}
+        value={mask}
         onChange={handleMask}
         ref={ref}
       />
