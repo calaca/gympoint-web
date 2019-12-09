@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import { MdAdd } from 'react-icons/md';
 import Table from '~/components/Table';
 import { loadRequest, removeRequest } from '~/store/modules/plans/actions';
@@ -57,7 +58,22 @@ export default function PlanList() {
             <button
               className="remove"
               type="button"
-              onClick={() => dispatch(removeRequest(row.original.id))}
+              onClick={() =>
+                confirmAlert({
+                  title: 'Confirmação de remoção',
+                  message: 'Tem certeza que quer deletar este aluno?',
+                  buttons: [
+                    {
+                      label: 'Sim',
+                      onClick: () => dispatch(removeRequest(row.original.id)),
+                    },
+                    {
+                      label: 'Não',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }
             >
               Apagar
             </button>

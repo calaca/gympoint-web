@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import colors from './colors';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
@@ -43,5 +45,11 @@ export default createGlobalStyle`
 
   .Toastify__toast {
     border-radius: 4px !important;
+  }
+
+  .react-confirm-alert-button-group > button {
+    background: ${colors.buttonPrimary} !important;
+    text-transform: uppercase;
+    font-weight: bold;
   }
 `;

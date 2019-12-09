@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import escapeRegExp from 'escape-string-regexp';
 import { removeRequest, loadRequest } from '~/store/modules/students/actions';
@@ -78,7 +79,22 @@ export default function StudentList() {
             <button
               className="remove"
               type="button"
-              onClick={() => dispatch(removeRequest(row.original.id))}
+              onClick={() =>
+                confirmAlert({
+                  title: 'Confirmação de remoção',
+                  message: 'Tem certeza que quer deletar este aluno?',
+                  buttons: [
+                    {
+                      label: 'Sim',
+                      onClick: () => dispatch(removeRequest(row.original.id)),
+                    },
+                    {
+                      label: 'Não',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }
             >
               Apagar
             </button>
