@@ -30,8 +30,6 @@ export default function StudentEdit() {
   const [ageValue, setAgeValue] = useState(history.location.state.student.age);
 
   function handleSubmit(student) {
-    console.tron.log();
-
     const formattedStudent = {
       ...student,
       weight:
@@ -43,8 +41,6 @@ export default function StudentEdit() {
           ? formatMetricToNumber(student.height)
           : student.height,
     };
-
-    console.tron.log(formattedStudent);
 
     dispatch(editRequest(formattedStudent, history.location.state.student.id));
   }
