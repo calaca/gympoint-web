@@ -19,6 +19,15 @@ export default function enrollments(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case constants.enrollmentsRegisterRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.enrollmentsRegisterSuccess: {
+        draft.enrollment = action.payload.enrollment;
+        draft.loading = false;
+        break;
+      }
       case constants.enrollmentsFailure: {
         draft.loading = false;
         break;

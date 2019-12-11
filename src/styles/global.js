@@ -3,6 +3,7 @@ import { darken } from 'polished';
 import colors from './colors';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from '~/styles/colors';
 
 export const Label = styled.label`
   em {
@@ -8,7 +9,7 @@ export const Label = styled.label`
 
   .select {
     span {
-      background-color: hsl(0, 0%, 80%) !important;
+      background-color: ${colors.lines} !important;
       padding: 0 !important;
     }
   }

@@ -128,6 +128,7 @@ export const Container = styled.main`
         div {
           font-weight: normal;
           text-transform: none;
+          border-color: ${colors.lines};
         }
 
         input {
