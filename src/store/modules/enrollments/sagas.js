@@ -1,7 +1,12 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import constants from './constants';
-import { enrollmentFailure, loadSuccess, registerSuccess } from './actions';
+import {
+  enrollmentFailure,
+  loadSuccess,
+  registerSuccess,
+  removeSuccess,
+} from './actions';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -40,7 +45,23 @@ export function* registerEnrollment({ payload }) {
   }
 }
 
+export function* removeEnrollment({ payload }) {
+  try {
+    const { id } = payload;
+
+    const response = yield call(api.delete, `enrollments/${id}`);
+
+    yield put(removeSuccess(response.data));
+
+    toast.success('Matrícula apagada com sucesso!');
+  } catch (err) {
+    toast.error('Falha ao apagar matrícula. Por favor, verifique seus dados.');
+    yield put(enrollmentFailure());
+  }
+}
+
 export default all([
   takeLatest(constants.enrollmentsLoadRequest, loadEnrollments),
   takeLatest(constants.enrollmentsRegisterRequest, registerEnrollment),
+  takeLatest(constants.enrollmentsRemoveRequest, removeEnrollment),
 ]);

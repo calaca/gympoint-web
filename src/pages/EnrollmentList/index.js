@@ -4,12 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-// import { confirmAlert } from 'react-confirm-alert';
+import { confirmAlert } from 'react-confirm-alert';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import Table from '~/components/Table';
-import { loadRequest } from '~/store/modules/enrollments/actions';
+import {
+  loadRequest,
+  removeRequest,
+} from '~/store/modules/enrollments/actions';
 
-// import history from '~/services/history';
+import history from '~/services/history';
 
 import { TableWrapper } from './styles';
 
@@ -69,17 +72,46 @@ export default function EnrollmentList() {
         Header: () => null,
         Cell: ({ row }) => (
           <div className="actions">
-            <button className="edit" type="button" onClick={() => {}}>
+            <button
+              className="edit"
+              type="button"
+              onClick={() => {
+                const { id } = row.original;
+                const enrollment = enrollments.find(s => s.id === id);
+                history.push(`/enrollments/edit/${id}`, {
+                  enrollment,
+                });
+              }}
+            >
               Editar
             </button>
-            <button className="remove" type="button" onClick={() => {}}>
+            <button
+              className="remove"
+              type="button"
+              onClick={() =>
+                confirmAlert({
+                  title: 'Confirmação de remoção',
+                  message: 'Tem certeza que deseja apagar esta matrícula?',
+                  buttons: [
+                    {
+                      label: 'Sim',
+                      onClick: () => dispatch(removeRequest(row.original.id)),
+                    },
+                    {
+                      label: 'Não',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }
+            >
               Apagar
             </button>
           </div>
         ),
       },
     ],
-    []
+    [dispatch, enrollments]
   );
 
   return (
