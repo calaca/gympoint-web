@@ -108,7 +108,7 @@ export default function EnrollmentAdd() {
           </button>
           <button
             type="submit"
-            form="register-plan-form"
+            form="register-enrollment-form"
             className="btn btn-primary"
           >
             <MdCheck size={20} /> <span>{loading ? 'Salvando' : 'Salvar'}</span>
@@ -116,7 +116,7 @@ export default function EnrollmentAdd() {
         </div>
       </div>
       <div className="box">
-        <Form id="register-plan-form" onSubmit={handleSubmit}>
+        <Form id="register-enrollment-form" onSubmit={handleSubmit}>
           <Label htmlFor="student">
             Aluno
             <SelectAsync

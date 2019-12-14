@@ -31,6 +31,23 @@ export function registerSuccess(enrollment) {
   };
 }
 
+export function editRequest(enrollment, id) {
+  return {
+    type: constants.enrollmentsEditRequest,
+    payload: {
+      enrollment,
+      id,
+    },
+  };
+}
+
+export function editSuccess(enrollment) {
+  return {
+    type: constants.enrollmentsEditSuccess,
+    payload: { enrollment },
+  };
+}
+
 export function removeRequest(id) {
   return {
     type: constants.enrollmentsRemoveRequest,

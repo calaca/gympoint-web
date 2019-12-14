@@ -28,6 +28,15 @@ export default function enrollments(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case constants.enrollmentsEditRequest: {
+        draft.loading = true;
+        break;
+      }
+      case constants.enrollmentsEditSuccess: {
+        draft.enrollment = action.payload.enrollment;
+        draft.loading = false;
+        break;
+      }
       case constants.enrollmentsRemoveRequest: {
         draft.loading = true;
         break;

@@ -5,6 +5,7 @@ import {
   enrollmentFailure,
   loadSuccess,
   registerSuccess,
+  editSuccess,
   removeSuccess,
 } from './actions';
 
@@ -45,6 +46,23 @@ export function* registerEnrollment({ payload }) {
   }
 }
 
+export function* editEnrollment({ payload }) {
+  try {
+    const { enrollment, id } = payload;
+
+    const response = yield call(api.put, `enrollments/${id}`, enrollment);
+
+    yield put(editSuccess(response.data));
+
+    toast.success('Matrícula alterada com sucesso!');
+
+    history.push('/enrollments');
+  } catch (err) {
+    err.response.data.errors.map(error => toast.error(error.msg));
+    yield put(enrollmentFailure());
+  }
+}
+
 export function* removeEnrollment({ payload }) {
   try {
     const { id } = payload;
@@ -63,5 +81,6 @@ export function* removeEnrollment({ payload }) {
 export default all([
   takeLatest(constants.enrollmentsLoadRequest, loadEnrollments),
   takeLatest(constants.enrollmentsRegisterRequest, registerEnrollment),
+  takeLatest(constants.enrollmentsEditRequest, editEnrollment),
   takeLatest(constants.enrollmentsRemoveRequest, removeEnrollment),
 ]);
