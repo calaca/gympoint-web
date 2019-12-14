@@ -4,10 +4,19 @@ import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
 import CurrencyFormat from 'react-currency-format';
+import * as yup from 'yup';
 import formatMetricToInteger from '~/utils/formatMetricToInteger';
 import currencyFormatter from '~/utils/currencyFormatter';
 import { registerRequest } from '~/store/modules/plans/actions';
 import { Label, Grid } from './styles';
+
+const schema = yup.object().shape({
+  title: yup.string().required('Título é obrigatório'),
+  duration: yup
+    .number()
+    .moreThan(0, 'Duração deve ser maior que zero')
+    .required('Duração é obrigatório'),
+});
 
 export default function PlanAdd() {
   const history = useHistory();
@@ -63,7 +72,7 @@ export default function PlanAdd() {
         </div>
       </div>
       <div className="box">
-        <Form id="register-plan-form" onSubmit={handleSubmit}>
+        <Form id="register-plan-form" schema={schema} onSubmit={handleSubmit}>
           <Label htmlFor="title">
             Título do plano
             <Input type="text" name="title" id="title" placeholder="Exemplo" />

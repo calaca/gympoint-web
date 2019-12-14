@@ -96,7 +96,13 @@ export default function PlanList() {
         </div>
       </div>
       <TableWrapper>
-        <Table columns={columns} data={plans} />
+        {plans.length !== 0 ? (
+          <Table columns={columns} data={plans} />
+        ) : (
+          <div className="box">
+            <p>Não existem planos ainda.</p>
+          </div>
+        )}
       </TableWrapper>
     </>
   );

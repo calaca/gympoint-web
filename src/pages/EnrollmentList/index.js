@@ -126,7 +126,13 @@ export default function EnrollmentList() {
         </div>
       </div>
       <TableWrapper>
-        <Table columns={columns} data={enrollments} />
+        {enrollments.length !== 0 ? (
+          <Table columns={columns} data={enrollments} />
+        ) : (
+          <div className="box">
+            <p>Não existem matrículas ainda.</p>
+          </div>
+        )}
       </TableWrapper>
     </>
   );

@@ -22,7 +22,6 @@ export const Container = styled.div`
   textarea {
     border: 1px solid ${colors.lines};
     border-radius: 4px;
-    margin-bottom: 20px;
     font-size: 16px;
     color: ${colors.gray};
     width: 100%;
@@ -50,4 +49,33 @@ export const Container = styled.div`
       background-color: ${darken(0.04, colors.buttonPrimary)};
     }
   }
+
+  form {
+    width: 100%;
+
+    label {
+      display: block;
+      width: 100%;
+      color: ${colors.grayDark};
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      line-height: 24px;
+      text-transform: uppercase;
+
+      span {
+        background-color: ${colors.warning};
+        color: ${colors.blackLight};
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin-top: 4px;
+        font-size: 12px;
+        text-transform: none;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
 `;
+
+export const Label = styled.label``;

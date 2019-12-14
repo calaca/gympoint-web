@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Textarea } from '@rocketseat/unform';
 import Modal from 'react-responsive-modal';
+import * as yup from 'yup';
 import Table from '~/components/Table';
 import { loadRequest, answerRequest } from '~/store/modules/helpOrders/actions';
-import { Container } from './styles';
+import { Container, Label } from './styles';
+
+const schema = yup.object().shape({
+  answer: yup.string().required('Resposta é obrigatória'),
+});
 
 export default function HelpOrderList() {
   const dispatch = useDispatch();
@@ -63,7 +68,13 @@ export default function HelpOrderList() {
         <h1 className="section-title">Pedidos de auxílio</h1>
       </div>
       <div className="table-wrapper">
-        <Table columns={columns} data={helpOrders} />
+        {helpOrders.length !== 0 ? (
+          <Table columns={columns} data={helpOrders} />
+        ) : (
+          <div className="box">
+            <p>Não existem pedidos de auxílio ainda.</p>
+          </div>
+        )}
       </div>
       <Modal
         focusTrapped={false}
@@ -84,13 +95,15 @@ export default function HelpOrderList() {
         <Container>
           <strong>Pergunta do aluno</strong>
           <p>{helpOrder.question}</p>
-          <strong>Sua resposta</strong>
-          <Form onSubmit={handleSubmit}>
-            <Textarea
-              name="answer"
-              id="answer"
-              placeholder="Digite sua resposta aqui"
-            />
+          <Form onSubmit={handleSubmit} schema={schema}>
+            <Label htmlFor="answer">
+              Sua resposta
+              <Textarea
+                name="answer"
+                id="answer"
+                placeholder="Digite sua resposta aqui"
+              />
+            </Label>
             <button type="submit">Responder aluno</button>
           </Form>
         </Container>
