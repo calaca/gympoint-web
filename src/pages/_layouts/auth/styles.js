@@ -91,9 +91,15 @@ export const Wrapper = styled.div`
         }
 
         svg {
-          animation: rotate 2s linear infinite;
+          animation: spin 2s linear infinite;
         }
       }
+    }
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
     }
   }
 `;

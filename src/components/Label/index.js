@@ -8,6 +8,7 @@ export default function Label({ children, htmlFor }) {
 }
 
 Label.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+    .isRequired,
   htmlFor: PropTypes.string.isRequired,
 };
