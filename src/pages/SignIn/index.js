@@ -1,9 +1,18 @@
 import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
+import * as yup from 'yup';
 
 import Label from '~/components/Label';
 
 import logo from '~/assets/logo.svg';
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Email inválido')
+    .required('Email é obrigatório'),
+  password: yup.string().required('Senha é obrigatória'),
+});
 
 export default function SignIn() {
   function handleSubmit(data) {
@@ -17,7 +26,7 @@ export default function SignIn() {
         <h1>Gympoint</h1>
       </div>
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} schema={schema}>
         <Label htmlFor="email">
           Seu e-mail
           <Input
@@ -25,7 +34,6 @@ export default function SignIn() {
             name="email"
             id="email"
             placeholder="exemplo@email.com"
-            required
           />
         </Label>
 
@@ -36,7 +44,6 @@ export default function SignIn() {
             name="password"
             id="password"
             placeholder="*************"
-            required
           />
         </Label>
 
