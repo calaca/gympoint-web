@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import { darken } from 'polished';
 
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');

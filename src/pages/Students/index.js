@@ -2,6 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
@@ -15,7 +17,7 @@ export default function Students() {
 
   async function loadStudents(q = '') {
     try {
-      const response = await api.get('/students', {
+      const response = await api.get('students', {
         params: {
           q,
         },
@@ -48,6 +50,16 @@ export default function Students() {
     setQuery(e.target.value);
   }
 
+  async function handleDeleteStudent(id) {
+    try {
+      const response = await api.delete(`students/${id}`);
+
+      setStudents(response.data);
+    } catch (err) {
+      err.response.data.errors.map(error => toast.error(error.msg));
+    }
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -70,7 +82,26 @@ export default function Students() {
             <button className="edit" type="button" onClick={() => {}}>
               Editar
             </button>
-            <button className="remove" type="button" onClick={() => {}}>
+            <button
+              className="remove"
+              type="button"
+              onClick={() =>
+                confirmAlert({
+                  title: 'Confirmação de remoção',
+                  message: 'Tem certeza que deseja apagar este aluno?',
+                  buttons: [
+                    {
+                      label: 'Sim',
+                      onClick: () => handleDeleteStudent(row.original.id),
+                    },
+                    {
+                      label: 'Não',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }
+            >
               Apagar
             </button>
           </div>
@@ -115,3 +146,12 @@ export default function Students() {
     </>
   );
 }
+
+Students.defaultProps = {
+  row: null,
+};
+
+Students.propTypes = {
+  // eslint-disable-next-line react/no-unused-prop-types
+  row: PropTypes.objectOf(PropTypes.object),
+};
