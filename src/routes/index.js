@@ -18,6 +18,12 @@ export default function Routes() {
 
       <Route path="/students" exact component={Students} isPrivate />
       <Route path="/students/add" exact component={StudentsNewEdit} isPrivate />
+      <Route
+        path="/students/edit/:id"
+        exact
+        component={StudentsNewEdit}
+        isPrivate
+      />
 
       <Route path="/plans" exact component={Plans} isPrivate />
       <Route path="/enrollments" exact component={Enrollments} isPrivate />

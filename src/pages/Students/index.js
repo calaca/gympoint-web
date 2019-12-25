@@ -6,6 +6,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import PropTypes from 'prop-types';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 import Table from '~/components/Table';
 
@@ -79,7 +80,17 @@ export default function Students() {
         Header: () => null,
         Cell: ({ row }) => (
           <div className="actions">
-            <button className="edit" type="button" onClick={() => {}}>
+            <button
+              className="edit"
+              type="button"
+              onClick={() => {
+                const { id } = row.original;
+                const student = students.find(s => s.id === id);
+                history.push(`/students/edit/${id}`, {
+                  student,
+                });
+              }}
+            >
               Editar
             </button>
             <button
@@ -108,7 +119,7 @@ export default function Students() {
         ),
       },
     ],
-    []
+    [students]
   );
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
@@ -32,19 +32,33 @@ const schema = yup.object().shape({
 
 export default function NewEdit() {
   const history = useHistory();
+  const student =
+    history.location.state && history.location.state.student
+      ? history.location.state.student
+      : null;
+
+  const [inputName, setInputName] = useState(student ? student.name : '');
+  const [inputEmail, setInputEmail] = useState(student ? student.email : '');
+  const [inputAge, setInputAge] = useState(student ? student.age : '');
 
   async function handleSubmit({ name, email, age, weight, height }) {
-    try {
-      await api.post('students', {
-        name,
-        email,
-        age,
-        weight: removeMask(weight),
-        height: removeMask(height),
-      });
+    const data = {
+      name,
+      email,
+      age,
+      weight: removeMask(weight),
+      height: removeMask(height),
+    };
 
-      toast.success('Novo aluno cadastrado com sucesso!');
-      history.goBack();
+    try {
+      if (!student) {
+        await api.post('students', { ...data });
+        toast.success('Novo aluno cadastrado com sucesso!');
+        history.goBack();
+      } else {
+        await api.put(`students/${student.id}`, { ...data });
+        toast.success('Aluno atualizado com sucesso!');
+      }
     } catch (err) {
       err.response.data.errors.map(error => toast.error(error.msg));
     }
@@ -78,7 +92,14 @@ export default function NewEdit() {
         <Form id="add-student-form" onSubmit={handleSubmit} schema={schema}>
           <Label htmlFor="name">
             Nome completo
-            <Input type="text" name="name" id="name" placeholder="Jane Doe" />
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Jane Doe"
+              value={inputName}
+              onChange={e => setInputName(e.target.value)}
+            />
           </Label>
           <Label htmlFor="email">
             Endereço de email
@@ -87,22 +108,40 @@ export default function NewEdit() {
               name="email"
               id="email"
               placeholder="exemplo@email.com"
+              value={inputEmail}
+              onChange={e => setInputEmail(e.target.value)}
             />
           </Label>
           <Grid>
             <Label htmlFor="age">
               Idade
-              <Input type="number" name="age" id="age" />
+              <Input
+                type="number"
+                name="age"
+                id="age"
+                value={inputAge}
+                onChange={e => setInputAge(e.target.value)}
+              />
             </Label>
 
             <Label htmlFor="weight">
               Peso <em>(em kg)</em>
-              <MaskInput name="weight" inputMask="99,9kg" />
+              <MaskInput
+                name="weight"
+                inputMask="99,9kg"
+                maskChar="0"
+                valueDefault={student ? student.weight : ''}
+              />
             </Label>
 
             <Label htmlFor="height">
               Altura
-              <MaskInput name="height" inputMask="9,99m" />
+              <MaskInput
+                name="height"
+                inputMask="9,99m"
+                maskChar="0"
+                valueDefault={student ? student.height : ''}
+              />
             </Label>
           </Grid>
         </Form>
