@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import { confirmAlert } from 'react-confirm-alert';
 import { MdAdd } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 // import history from '~/services/history';
@@ -30,6 +30,16 @@ export default function PlanList() {
     loadPlans();
   }, []);
 
+  async function handleDeletePlan(id) {
+    try {
+      const response = await api.delete(`plans/${id}`);
+
+      setPlans(response.data);
+    } catch (err) {
+      err.response.data.errors.map(error => toast.error(error.msg));
+    }
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -53,7 +63,26 @@ export default function PlanList() {
             <button className="edit" type="button" onClick={() => {}}>
               Editar
             </button>
-            <button className="remove" type="button" onClick={() => {}}>
+            <button
+              className="remove"
+              type="button"
+              onClick={() =>
+                confirmAlert({
+                  title: 'Confirmação de remoção',
+                  message: 'Tem certeza que deseja apagar este plano?',
+                  buttons: [
+                    {
+                      label: 'Sim',
+                      onClick: () => handleDeletePlan(row.original.id),
+                    },
+                    {
+                      label: 'Não',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }
+            >
               Apagar
             </button>
           </div>

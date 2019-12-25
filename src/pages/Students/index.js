@@ -10,8 +10,6 @@ import history from '~/services/history';
 
 import Table from '~/components/Table';
 
-// import { Container } from './styles';
-
 export default function Students() {
   const [students, setStudents] = useState([]);
   const [query, setQuery] = useState('');
