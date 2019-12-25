@@ -1,11 +1,117 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { MdAdd, MdSearch } from 'react-icons/md';
+import { toast } from 'react-toastify';
+
+import api from '~/services/api';
+
+import Table from '~/components/Table';
 
 // import { Container } from './styles';
 
 export default function Students() {
+  const [students, setStudents] = useState([]);
+  const [query, setQuery] = useState('');
+
+  async function loadStudents(q = '') {
+    try {
+      const response = await api.get('/students', {
+        params: {
+          q,
+        },
+      });
+
+      setStudents(response.data);
+    } catch (err) {
+      err.response.data.errors.map(error => toast.error(error.msg));
+    }
+  }
+
+  useEffect(() => {
+    loadStudents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useMemo(() => {
+    function filterResults() {
+      if (query) {
+        loadStudents(query);
+      } else {
+        loadStudents();
+      }
+    }
+
+    filterResults();
+  }, [query]);
+
+  function handleSearch(e) {
+    setQuery(e.target.value);
+  }
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Nome',
+        accessor: 'name',
+      },
+      {
+        Header: 'E-mail',
+        accessor: 'email',
+      },
+      {
+        Header: 'Idade',
+        accessor: 'age',
+      },
+      {
+        id: 'actions',
+        Header: () => null,
+        Cell: ({ row }) => (
+          <div className="actions">
+            <button className="edit" type="button" onClick={() => {}}>
+              Editar
+            </button>
+            <button className="remove" type="button" onClick={() => {}}>
+              Apagar
+            </button>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
+
   return (
-    <div>
-      <h1>Students</h1>
-    </div>
+    <>
+      <div className="actions">
+        <h1 className="section-title">Gerenciando alunos</h1>
+
+        <div className="cta">
+          <Link to="/students/add" className="btn btn-primary">
+            <MdAdd size={20} /> <span>Cadastrar</span>
+          </Link>
+          <div className="search-wrapper">
+            <MdSearch size={16} />
+            <input
+              className="search"
+              type="text"
+              placeholder="Buscar aluno"
+              value={query}
+              onChange={handleSearch}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="table-wrapper">
+        {students.length !== 0 ? (
+          <Table columns={columns} data={students} />
+        ) : (
+          <div className="box">
+            <p>
+              Não existem resultados para <strong>{query}</strong>
+            </p>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
