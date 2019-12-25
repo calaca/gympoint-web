@@ -14,6 +14,12 @@ export function signInSuccess(token, user) {
   };
 }
 
+export function signOut() {
+  return {
+    type: constants.authSignOut,
+  };
+}
+
 export function signFailure() {
   return {
     type: constants.authSignFailure,

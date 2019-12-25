@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Wrapper, Container } from './styles';
+import Header from '~/components/Header';
 
-// import Header from '~/components/Header';
+import { Wrapper, Container } from './styles';
 
 export default function DefaultLayout({ children }) {
   return (
     <Wrapper>
-      {/* <Header /> */}
+      <Header />
       <Container>{children}</Container>
     </Wrapper>
   );
