@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import InputMask from 'react-input-mask';
 import { useField } from '@rocketseat/unform';
 
-export default function MaskInput({ name, inputMask, maskChar, valueDefault }) {
-  const ref = useRef(null);
-  const { fieldName, registerField, defaultValue, error } = useField(name);
-  const [mask, setMask] = useState(
-    defaultValue || valueDefault ? valueDefault : ''
-  );
+export default function MaskInput({ name, inputMask, maskChar, defaultValue }) {
+  const ref = useRef();
+  const { fieldName, registerField } = useField(name);
+  const [value, setValue] = useState(defaultValue || '');
 
   useEffect(() => {
     if (ref.current) {
@@ -20,8 +18,8 @@ export default function MaskInput({ name, inputMask, maskChar, valueDefault }) {
     }
   }, [ref.current]); // eslint-disable-line
 
-  function handleMask(e) {
-    return setMask(e.target.value);
+  function handleChange(e) {
+    return setValue(e.target.value);
   }
 
   return (
@@ -32,21 +30,22 @@ export default function MaskInput({ name, inputMask, maskChar, valueDefault }) {
         name={fieldName}
         mask={inputMask}
         maskChar={maskChar}
-        value={mask}
-        onChange={handleMask}
+        value={value}
+        onChange={handleChange}
         ref={ref}
       />
-      {error && <span>{error}</span>}
     </>
   );
 }
 
 MaskInput.defaultProps = {
-  valueDefault: '',
+  defaultValue: '',
+  maskChar: '_',
 };
 
 MaskInput.propTypes = {
   name: PropTypes.string.isRequired,
   inputMask: PropTypes.string.isRequired,
-  valueDefault: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maskChar: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

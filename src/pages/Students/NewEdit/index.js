@@ -130,7 +130,7 @@ export default function NewEdit() {
                 name="weight"
                 inputMask="99,9kg"
                 maskChar="0"
-                valueDefault={student ? student.weight : ''}
+                defaultValue={student ? student.weight : ''}
               />
             </Label>
 
@@ -140,7 +140,7 @@ export default function NewEdit() {
                 name="height"
                 inputMask="9,99m"
                 maskChar="0"
-                valueDefault={student ? student.height : ''}
+                defaultValue={student ? student.height : ''}
               />
             </Label>
           </Grid>
