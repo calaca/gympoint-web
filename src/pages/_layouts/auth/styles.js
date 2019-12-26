@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   .box {
     background-color: ${props => props.theme.white};
     padding: 50px 30px;
@@ -20,16 +21,19 @@ export const Wrapper = styled.div`
     align-items: center;
     border-radius: 4px;
     margin: 0 20px;
+
     .logo {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       margin-bottom: 26px;
+
       img {
         width: 100px;
         margin-bottom: 12px;
       }
+
       h1 {
         color: ${props => props.theme.primary};
         text-transform: uppercase;
@@ -37,8 +41,10 @@ export const Wrapper = styled.div`
         font-size: 30px;
       }
     }
+
     form {
       width: 100%;
+
       label {
         display: block;
         width: 100%;
@@ -48,6 +54,7 @@ export const Wrapper = styled.div`
         margin-bottom: 20px;
         line-height: 24px;
         text-transform: uppercase;
+
         input {
           display: block;
           width: 100%;
@@ -57,10 +64,12 @@ export const Wrapper = styled.div`
           font-size: 16px;
           font-weight: normal;
           color: ${props => props.theme.gray};
+
           &::placeholder {
             color: ${props => props.theme.grayLight};
           }
         }
+
         span {
           background-color: ${props => props.theme.warning};
           color: ${props => props.theme.blackLight};
@@ -73,6 +82,7 @@ export const Wrapper = styled.div`
           text-align: center;
         }
       }
+
       button {
         display: block;
         width: 100%;

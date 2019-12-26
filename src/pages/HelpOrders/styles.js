@@ -10,12 +10,14 @@ export const Container = styled.div`
     margin-bottom: 8px;
     display: inline-block;
   }
+
   p {
     font-size: 16px;
     line-height: 26px;
     color: ${props => props.theme.gray};
     margin-bottom: 20px;
   }
+
   textarea {
     border: 1px solid ${props => props.theme.lines};
     border-radius: 4px;
@@ -25,10 +27,12 @@ export const Container = styled.div`
     height: 100px;
     resize: none;
     padding: 10px 14px;
+
     &::placeholder {
       color: ${props => props.theme.grayLight};
     }
   }
+
   button {
     width: 100%;
     font-weight: bold;
@@ -39,12 +43,15 @@ export const Container = styled.div`
     border-radius: 4px;
     font-size: 16px;
     transition: all 0.4s ease-in-out;
+
     &:hover {
       background-color: ${props => darken(0.04, props.theme.buttonPrimary)};
     }
   }
+
   form {
     width: 100%;
+
     label {
       display: block;
       width: 100%;
@@ -54,6 +61,7 @@ export const Container = styled.div`
       margin-bottom: 20px;
       line-height: 24px;
       text-transform: uppercase;
+
       span {
         background-color: ${props => props.theme.warning};
         color: ${props => props.theme.blackLight};
