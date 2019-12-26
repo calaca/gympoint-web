@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import colors from '~/styles/colors';
 
 export const Wrapper = styled.div`
   min-height: 100%;
-  background: ${colors.loggedBg};
-  color: ${colors.grayDark};
+  background: ${props => props.theme.loggedBg};
+  color: ${props => props.theme.grayDark};
 `;
 
 export const Container = styled.main`
@@ -20,7 +19,7 @@ export const Container = styled.main`
 
   .box,
   table {
-    background-color: ${colors.white};
+    background-color: ${props => props.theme.white};
     padding: 30px;
     border-radius: 4px;
     width: 100%;
@@ -32,7 +31,7 @@ export const Container = styled.main`
 
     thead {
       text-align: left;
-      color: ${colors.grayDark};
+      color: ${props => props.theme.grayDark};
       font-size: 16px;
       font-weight: bold;
       margin-bottom: 20px;
@@ -52,12 +51,12 @@ export const Container = styled.main`
     }
 
     tbody {
-      color: ${colors.grayLight};
+      color: ${props => props.theme.grayLight};
       font-size: 16px;
 
       tr {
         td {
-          border-bottom: 1px solid ${colors.tableBorder};
+          border-bottom: 1px solid ${props => props.theme.tableBorder};
 
           &:nth-child(3) {
             text-align: center;
@@ -90,18 +89,18 @@ export const Container = styled.main`
           }
 
           .edit {
-            color: ${colors.info};
+            color: ${props => props.theme.info};
 
             &:hover {
-              color: ${darken(0.2, colors.info)};
+              color: ${props => darken(0.2, props.theme.info)};
             }
           }
 
           .remove {
-            color: ${colors.danger};
+            color: ${props => props.theme.danger};
 
             &:hover {
-              color: ${darken(0.2, colors.danger)};
+              color: ${props => darken(0.2, props.theme.danger)};
             }
           }
         }
@@ -118,7 +117,7 @@ export const Container = styled.main`
       label {
         display: block;
         width: 100%;
-        color: ${colors.grayDark};
+        color: ${props => props.theme.grayDark};
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 20px;
@@ -128,31 +127,31 @@ export const Container = styled.main`
         div {
           font-weight: normal;
           text-transform: none;
-          border-color: ${colors.lines};
+          border-color: ${props => props.theme.lines};
         }
 
         input {
           display: block;
           width: 100%;
           border-radius: 4px;
-          border: 1px solid ${colors.lines};
+          border: 1px solid ${props => props.theme.lines};
           padding: 10px 14px;
           font-size: 16px;
           font-weight: normal;
-          color: ${colors.gray};
+          color: ${props => props.theme.gray};
 
           &::placeholder {
-            color: ${colors.grayLight};
+            color: ${props => props.theme.grayLight};
           }
 
           &:disabled {
-            background-color: ${colors.loggedBg};
+            background-color: ${props => props.theme.loggedBg};
           }
         }
 
         span {
-          background-color: ${colors.warning};
-          color: ${colors.blackLight};
+          background-color: ${props => props.theme.warning};
+          color: ${props => props.theme.blackLight};
           padding: 4px 10px;
           border-radius: 4px;
           margin-top: 4px;
@@ -164,7 +163,6 @@ export const Container = styled.main`
       }
     }
   }
-
   .actions {
     margin-bottom: 24px;
     display: flex;
@@ -173,7 +171,7 @@ export const Container = styled.main`
     flex-wrap: wrap;
 
     .section-title {
-      color: ${colors.grayDark};
+      color: ${props => props.theme.grayDark};
       margin: 0;
     }
 
@@ -200,19 +198,18 @@ export const Container = styled.main`
           margin: 0 16px 0 0;
         }
       }
-
       .search-wrapper {
         display: flex;
         position: relative;
 
         .search {
-          border: 1px solid ${colors.lines};
-          background-color: ${colors.white};
-          color: ${colors.gray};
+          border: 1px solid ${props => props.theme.lines};
+          background-color: ${props => props.theme.white};
+          color: ${props => props.theme.gray};
           padding: 10px 10px 10px 40px;
 
           &::placeholder {
-            color: ${colors.grayLight};
+            color: ${props => props.theme.grayLight};
           }
         }
 
@@ -220,7 +217,7 @@ export const Container = styled.main`
           position: absolute;
           top: 13px;
           left: 32px;
-          color: ${colors.grayLight};
+          color: ${props => props.theme.grayLight};
 
           @media (max-width: 767.98px) {
             left: 16px;
@@ -244,20 +241,21 @@ export const Container = styled.main`
       }
 
       .btn-primary {
-        background-color: ${colors.buttonPrimary};
-        color: ${colors.white};
+        background-color: ${props => props.theme.buttonPrimary};
+        color: ${props => props.theme.white};
 
         &:hover {
-          background-color: ${darken(0.04, colors.buttonPrimary)};
+          background-color: ${props => darken(0.04, props.theme.buttonPrimary)};
         }
       }
 
       .btn-secondary {
-        background-color: ${colors.buttonSecondary};
-        color: ${colors.white};
+        background-color: ${props => props.theme.buttonSecondary};
+        color: ${props => props.theme.white};
 
         &:hover {
-          background-color: ${darken(0.04, colors.buttonSecondary)};
+          background-color: ${props =>
+            darken(0.04, props.theme.buttonSecondary)};
         }
       }
     }
@@ -273,17 +271,17 @@ export const Container = styled.main`
       border: 0;
       transition: all 0.4s ease-in-out;
       padding: 10px 16px;
-      background-color: ${colors.white};
+      background-color: ${props => props.theme.white};
       border-radius: 4px;
       margin: 0 5px;
       display: inline-block;
 
       svg {
-        color: ${colors.primary};
+        color: ${props => props.theme.primary};
       }
 
       &:hover {
-        background-color: ${darken(0.06, colors.white)};
+        background-color: ${props => darken(0.06, props.theme.white)};
       }
 
       &:disabled {
@@ -294,12 +292,11 @@ export const Container = styled.main`
 
     span {
       font-size: 14px;
-      color: ${colors.gray};
+      color: ${props => props.theme.gray};
       display: inline-block;
       padding: 0 5px;
     }
   }
-
   @keyframes rotate {
     100% {
       transform: rotate(360deg);

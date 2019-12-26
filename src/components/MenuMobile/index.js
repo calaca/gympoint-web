@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, NavLinkStyled } from './styles';

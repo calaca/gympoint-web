@@ -1,10 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import * as yup from 'yup';
 import { MdSync } from 'react-icons/md';
-import { Label } from './styles';
+import * as yup from 'yup';
+
+import Label from '~/components/Label';
+
 import { signInRequest } from '~/store/modules/auth/actions';
+
 import logo from '~/assets/logo.svg';
 
 const schema = yup.object().shape({
@@ -32,7 +35,7 @@ export default function SignIn() {
 
       <Form onSubmit={handleSubmit} schema={schema}>
         <Label htmlFor="email">
-          Seu email
+          Seu e-mail
           <Input
             type="email"
             name="email"

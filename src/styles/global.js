@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { darken } from 'polished';
-import colors from './colors';
+
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -50,22 +50,27 @@ export default createGlobalStyle`
   }
 
   .react-confirm-alert-button-group > button {
-    background: ${colors.buttonPrimary} !important;
+    background: ${props => props.theme.buttonPrimary} !important;
     text-transform: uppercase;
     font-weight: bold;
     transition: background 0.4s ease-in-out;
 
     &:hover {
-      background: ${darken(0.04, colors.buttonPrimary)} !important;
+      background: ${props =>
+        darken(0.04, props.theme.buttonPrimary)} !important;
     }
 
     &:last-child {
-      background: ${colors.loggedBg} !important;
-      color: ${colors.grayLight} !important;
+      background: ${props => props.theme.loggedBg} !important;
+      color: ${props => props.theme.grayLight} !important;
 
       &:hover {
-        background: ${darken(0.04, colors.loggedBg)} !important;
+        background: ${props => darken(0.04, props.theme.loggedBg)} !important;
       }
     }
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
   }
 `;

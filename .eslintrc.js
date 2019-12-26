@@ -41,8 +41,9 @@ module.exports = {
     camelcase: 'off',
     'no-console': ['error', { allow: ['tron'] }],
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
-  },
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/jsx-props-no-spreading': 'off'
+    },
   settings: {
     'import/resolver': {
       'babel-plugin-root-import': {

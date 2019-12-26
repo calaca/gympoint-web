@@ -1,19 +1,18 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-import colors from '~/styles/colors';
 
 export const Wrapper = styled.div`
   min-height: 100%;
-  background: ${colors.notloggedBg};
-  color: ${colors.white};
+  background: ${props => props.theme.notloggedBg};
+  color: ${props => props.theme.white};
   display: flex;
   justify-content: center;
   align-items: center;
 
   .box {
-    background-color: ${colors.white};
+    background-color: ${props => props.theme.white};
     padding: 50px 30px;
-    box-shadow: 0 0 20px 0 ${colors.shadow};
+    box-shadow: 0 0 20px 0 ${props => props.theme.shadow};
     max-width: 100%;
     width: 360px;
     display: flex;
@@ -36,7 +35,7 @@ export const Wrapper = styled.div`
       }
 
       h1 {
-        color: ${colors.primary};
+        color: ${props => props.theme.primary};
         text-transform: uppercase;
         font-weight: bold;
         font-size: 30px;
@@ -49,7 +48,7 @@ export const Wrapper = styled.div`
       label {
         display: block;
         width: 100%;
-        color: ${colors.grayDark};
+        color: ${props => props.theme.grayDark};
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 20px;
@@ -60,20 +59,20 @@ export const Wrapper = styled.div`
           display: block;
           width: 100%;
           border-radius: 4px;
-          border: 1px solid ${colors.lines};
+          border: 1px solid ${props => props.theme.lines};
           padding: 10px 14px;
           font-size: 16px;
           font-weight: normal;
-          color: ${colors.gray};
+          color: ${props => props.theme.gray};
 
           &::placeholder {
-            color: ${colors.grayLight};
+            color: ${props => props.theme.grayLight};
           }
         }
 
         span {
-          background-color: ${colors.warning};
-          color: ${colors.blackLight};
+          background-color: ${props => props.theme.warning};
+          color: ${props => props.theme.blackLight};
           padding: 4px 10px;
           border-radius: 4px;
           margin-top: 4px;
@@ -88,8 +87,8 @@ export const Wrapper = styled.div`
         display: block;
         width: 100%;
         margin: 0 auto;
-        background-color: ${colors.primary};
-        color: ${colors.white};
+        background-color: ${props => props.theme.primary};
+        color: ${props => props.theme.white};
         padding: 10px 14px;
         font-size: 16px;
         font-weight: bold;
@@ -98,13 +97,19 @@ export const Wrapper = styled.div`
         transition: background-color 0.4s ease-in-out;
 
         &:hover {
-          background-color: ${darken(0.04, colors.primary)};
+          background-color: ${props => darken(0.04, props.theme.primary)};
         }
 
         svg {
-          animation: rotate 2s linear infinite;
+          animation: spin 2s linear infinite;
         }
       }
+    }
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
     }
   }
 `;
