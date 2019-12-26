@@ -8,6 +8,7 @@ import pt from 'date-fns/locale/pt';
 import PropTypes from 'prop-types';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 import Table from '~/components/Table';
 
@@ -90,7 +91,17 @@ export default function Enrollments() {
         Header: () => null,
         Cell: ({ row }) => (
           <div className="actions">
-            <button className="edit" type="button" onClick={() => {}}>
+            <button
+              className="edit"
+              type="button"
+              onClick={() => {
+                const { id } = row.original;
+                const enrollment = enrollments.find(s => s.id === id);
+                history.push(`/enrollments/edit/${id}`, {
+                  enrollment,
+                });
+              }}
+            >
               Editar
             </button>
             <button
@@ -119,7 +130,7 @@ export default function Enrollments() {
         ),
       },
     ],
-    []
+    [enrollments]
   );
 
   return (

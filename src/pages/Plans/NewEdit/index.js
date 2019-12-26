@@ -43,7 +43,6 @@ export default function NewEdit() {
       duration,
       price: Number(removeMask(inputPrice)),
     };
-    console.tron.log(data);
 
     try {
       if (!plan) {
@@ -72,7 +71,9 @@ export default function NewEdit() {
   return (
     <>
       <div className="actions">
-        <h1 className="section-title">Cadastro de plano</h1>
+        <h1 className="section-title">
+          {!plan ? 'Cadastro de plano' : 'Edição de plano'}
+        </h1>
 
         <div className="cta">
           <button

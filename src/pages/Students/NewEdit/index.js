@@ -67,7 +67,9 @@ export default function NewEdit() {
   return (
     <>
       <div className="actions">
-        <h1 className="section-title">Cadastro de aluno</h1>
+        <h1 className="section-title">
+          {!student ? 'Cadastro de aluno' : 'Edição de aluno'}
+        </h1>
 
         <div className="cta">
           <button
