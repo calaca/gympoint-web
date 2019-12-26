@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import PropTypes from 'prop-types';
@@ -28,6 +29,18 @@ export default function Enrollments() {
 
     loadEnrollments();
   }, []);
+
+  async function handleDeleteEnrollment(id) {
+    try {
+      const response = await api.delete(`enrollments/${id}`);
+
+      setEnrollments(response.data);
+
+      toast.success('Matrícula apagada com sucesso!');
+    } catch (err) {
+      err.response.data.errors.map(error => toast.error(error.msg));
+    }
+  }
 
   const columns = useMemo(
     () => [
@@ -80,7 +93,26 @@ export default function Enrollments() {
             <button className="edit" type="button" onClick={() => {}}>
               Editar
             </button>
-            <button className="remove" type="button" onClick={() => {}}>
+            <button
+              className="remove"
+              type="button"
+              onClick={() =>
+                confirmAlert({
+                  title: 'Confirmação de remoção',
+                  message: 'Tem certeza que deseja apagar esta matrícula?',
+                  buttons: [
+                    {
+                      label: 'Sim',
+                      onClick: () => handleDeleteEnrollment(row.original.id),
+                    },
+                    {
+                      label: 'Não',
+                      onClick: () => null,
+                    },
+                  ],
+                })
+              }
+            >
               Apagar
             </button>
           </div>

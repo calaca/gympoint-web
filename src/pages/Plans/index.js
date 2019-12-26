@@ -35,6 +35,8 @@ export default function PlanList() {
       const response = await api.delete(`plans/${id}`);
 
       setPlans(response.data);
+
+      toast.success('Plano apagado com sucesso!');
     } catch (err) {
       err.response.data.errors.map(error => toast.error(error.msg));
     }

@@ -54,6 +54,8 @@ export default function Students() {
       const response = await api.delete(`students/${id}`);
 
       setStudents(response.data);
+
+      toast.success('Aluno apagado com sucesso!');
     } catch (err) {
       err.response.data.errors.map(error => toast.error(error.msg));
     }
