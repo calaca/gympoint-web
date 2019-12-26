@@ -2,14 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { MdCheck, MdChevronLeft } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
-import CurrencyInput from 'react-currency-input';
+import CurrencyFormat from 'react-currency-format';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 import api from '~/services/api';
 
 import Label from '~/components/Label';
-import { floatToInt } from '~/utils/helpers';
+import { removeMask } from '~/utils/helpers';
 
 import { Grid } from './styles';
 
@@ -18,36 +18,56 @@ const schema = yup.object().shape({
   duration: yup
     .number()
     .moreThan(0, 'Duração deve ser maior que zero')
+    .nullable()
+    .transform((value, originalValue) =>
+      originalValue.trim() === '' ? null : value
+    )
     .required('Duração é obrigatório'),
   price: yup.string(),
 });
 
 export default function NewEdit() {
   const history = useHistory();
-  const [inputTitle, setInputTitle] = useState();
-  const [inputDuration, setInputDuration] = useState();
-  const [inputPrice, setInputPrice] = useState();
+  const plan =
+    history.location.state && history.location.state.plan
+      ? history.location.state.plan
+      : null;
 
-  const total = useMemo(() => inputDuration * inputPrice, [
-    inputDuration,
-    inputPrice,
-  ]);
+  const [inputTitle, setInputTitle] = useState(plan ? plan.title : '');
+  const [inputDuration, setInputDuration] = useState(plan ? plan.duration : '');
+  const [inputPrice, setInputPrice] = useState(plan ? plan.price / 100 : '');
 
   async function handleSubmit({ title, duration }) {
     const data = {
       title,
       duration,
-      price: floatToInt(inputPrice),
+      price: Number(removeMask(inputPrice)),
     };
+    console.tron.log(data);
 
     try {
-      await api.post('plans', { ...data });
-      toast.success('Novo plano cadastrado com sucesso!');
-      history.goBack();
+      if (!plan) {
+        await api.post('plans', { ...data });
+        toast.success('Novo plano cadastrado com sucesso!');
+        history.goBack();
+      } else {
+        await api.put(`plans/${plan.id}`, { ...data });
+        toast.success('Plano atualizado com sucesso!');
+      }
     } catch (err) {
       err.response.data.errors.map(error => toast.error(error.msg));
     }
   }
+
+  const total = useMemo(() => {
+    let price;
+    if (typeof inputPrice === 'string') {
+      price = Number(removeMask(inputPrice)) / 100;
+    } else {
+      price = inputPrice;
+    }
+    return inputDuration * price;
+  }, [inputDuration, inputPrice]);
 
   return (
     <>
@@ -100,27 +120,29 @@ export default function NewEdit() {
             </Label>
             <Label htmlFor="price">
               Preço mensal
-              <CurrencyInput
-                id="price"
-                name="price"
-                value={inputPrice}
-                onChange={(e, maskedvalue) => setInputPrice(maskedvalue)}
+              <CurrencyFormat
                 prefix="R$"
+                fixedDecimalScale
                 decimalSeparator=","
+                decimalScale={2}
                 thousandSeparator="."
-                precision="2"
+                name="price"
+                id="price"
+                value={inputPrice}
+                onChange={e => setInputPrice(e.target.value)}
               />
             </Label>
             <Label htmlFor="total">
               Preço total
-              <CurrencyInput
-                id="total"
-                name="total"
-                value={total}
+              <CurrencyFormat
                 prefix="R$"
+                fixedDecimalScale
                 decimalSeparator=","
+                decimalScale={2}
                 thousandSeparator="."
-                precision="2"
+                name="total"
+                id="total"
+                value={total}
                 disabled
               />
             </Label>

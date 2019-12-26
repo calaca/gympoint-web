@@ -6,7 +6,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import PropTypes from 'prop-types';
 
 import api from '~/services/api';
-// import history from '~/services/history';
+import history from '~/services/history';
 
 import Table from '~/components/Table';
 import { formatPrice } from '~/utils/helpers';
@@ -60,7 +60,17 @@ export default function PlanList() {
         Header: () => null,
         Cell: ({ row }) => (
           <div className="actions">
-            <button className="edit" type="button" onClick={() => {}}>
+            <button
+              className="edit"
+              type="button"
+              onClick={() => {
+                const { id } = row.original;
+                const plan = plans.find(p => p.id === id);
+                history.push(`/plans/edit/${id}`, {
+                  plan,
+                });
+              }}
+            >
               Editar
             </button>
             <button
@@ -89,7 +99,7 @@ export default function PlanList() {
         ),
       },
     ],
-    []
+    [plans]
   );
 
   return (

@@ -5,5 +5,3 @@ export const formatPrice = intValue =>
     style: 'currency',
     currency: 'BRL',
   });
-
-export const floatToInt = floatNum => floatNum.toString().replace('.', '');
