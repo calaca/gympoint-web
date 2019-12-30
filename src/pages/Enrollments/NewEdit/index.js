@@ -98,8 +98,10 @@ export default function NewEdit() {
     let startDateFormatted = addMinutes(startDate, minutes);
     startDateFormatted = addSeconds(startDate, seconds + 1);
 
+    console.tron.log(student);
+
     const data = {
-      student_id: student && student.id,
+      student_id: student && student.id ? student.id : student.value,
       plan_id: plan && plan.id,
       start_date: startDateFormatted,
     };
