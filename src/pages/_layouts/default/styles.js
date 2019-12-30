@@ -198,6 +198,7 @@ export const Container = styled.main`
           margin: 0 16px 0 0;
         }
       }
+
       .search-wrapper {
         display: flex;
         position: relative;
@@ -211,6 +212,14 @@ export const Container = styled.main`
           &::placeholder {
             color: ${props => props.theme.grayLight};
           }
+
+          @media (max-width: 767.98px) {
+            margin-right: 0;
+          }
+
+          @media (max-width: 415px) {
+            margin-top: 10px;
+          }
         }
 
         svg {
@@ -221,6 +230,10 @@ export const Container = styled.main`
 
           @media (max-width: 767.98px) {
             left: 16px;
+          }
+
+          @media (max-width: 415px) {
+            top: 20px;
           }
         }
       }
